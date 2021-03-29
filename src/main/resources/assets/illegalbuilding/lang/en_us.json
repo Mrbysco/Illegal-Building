@@ -1,0 +1,21 @@
+{
+	"_comment": "Creative Tab Name",
+	"itemGroup.illegalbuilding": "Illegal Building",
+	
+	"_comment": "Block names",
+	"block.illegalbuilding.offset_stone": "Offset Stone",
+	"block.illegalbuilding.impossible_oak_log": "Illegal Oak Log",
+	"block.illegalbuilding.impossible_spruce_log": "Illegal Spruce Log",
+	"block.illegalbuilding.impossible_birch_log": "Illegal Birch Log",
+	"block.illegalbuilding.impossible_jungle_log": "Illegal Jungle Log",
+	"block.illegalbuilding.impossible_acacia_log": "Illegal Acacia Log",
+	"block.illegalbuilding.impossible_dark_oak_log": "Illegal Dark Oak Log",
+	"block.illegalbuilding.impossible_sand": "Illegal Sand",
+	"block.illegalbuilding.impossible_red_sand": "Illegal Red Sand",
+	"block.illegalbuilding.impossible_sugar_cane": "Illegal Sugar Cane",
+	"block.illegalbuilding.impossible_cactus": "Illegal Cactus",
+	
+	"_comment": "Entity names",
+	"entity.illegalbuilding.impossible_falling_block": "Illegal Falling Block"
+
+}

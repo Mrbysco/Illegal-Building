@@ -1,0 +1,32 @@
+{
+	"__comment": "Designed by Mrbysco",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "#cross",
+		"cross": "blocks/e_texture"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "Element",
+			"from": [ 0.8, 0, 8 ],
+			"to": [ 15.2, 16, 8.001 ],
+			"rotation": { "origin": [ 8, 8, 8 ], "axis": "y", "angle": 45, "rescale": true },
+			"shade": false,
+			"faces": {
+				"north": { "uv": [ 0, 16, 16, 0 ], "texture": "#cross", "tintindex": 0 },
+				"south": { "uv": [ 0, 16, 16, 0 ], "texture": "#cross", "tintindex": 0 }
+			}
+		},
+		{
+			"__comment": "Element",
+			"from": [ 8, 0, 0.8 ],
+			"to": [ 8.001, 16, 15.2 ],
+			"rotation": { "origin": [ 8, 8, 8 ], "axis": "y", "angle": 45, "rescale": true },
+			"shade": false,
+			"faces": {
+				"west": { "uv": [ 0, 16, 16, 0 ], "texture": "#cross", "tintindex": 0 },
+				"east": { "uv": [ 0, 16, 16, 0 ], "texture": "#cross", "tintindex": 0 }
+			}
+		}
+	]
+}

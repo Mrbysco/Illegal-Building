@@ -1,0 +1,12 @@
+{
+    "parent": "illegalbuilding:block/cube_offset",
+    "textures": {
+        "particle": "#all",
+        "down": "#all",
+        "up": "#all",
+        "north": "#all",
+        "east": "#all",
+        "south": "#all",
+        "west": "#all"
+    }
+}

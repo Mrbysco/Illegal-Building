@@ -1,0 +1,6 @@
+{
+    "parent": "illegalbuilding:block/cube_offset_all",
+    "textures": {
+        "all": "block/stone"
+    }
+}

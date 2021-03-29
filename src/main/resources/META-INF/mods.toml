@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+#issueTrackerURL="URL.HERE"
+license="MIT"
+
+[[mods]]
+modId="illegalbuilding"
+version="${file.jarVersion}"
+displayName="Illegal Building"
+#displayURL="URL.HERE"
+authors="Mrbysco"
+description='''
+Just some blasphemy.
+'''

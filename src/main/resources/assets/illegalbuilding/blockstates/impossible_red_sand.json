@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "illegalbuilding:block/impossible_red_sand" },
+            { "model": "illegalbuilding:block/impossible_red_sand", "y": 90 },
+            { "model": "illegalbuilding:block/impossible_red_sand", "y": 180 },
+            { "model": "illegalbuilding:block/impossible_red_sand", "y": 270 }
+        ]
+    }
+}
