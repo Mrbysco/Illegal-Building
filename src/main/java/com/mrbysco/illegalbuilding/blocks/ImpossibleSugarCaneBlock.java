@@ -25,7 +25,7 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         if (worldIn.isAirBlock(pos.down())) {
             int i;
-            for(i = 1; worldIn.getBlockState(pos.up(i)).isIn(this); ++i) {
+            for(i = 1; worldIn.getBlockState(pos.up(i)).matchesBlock(this); ++i) {
             }
 
             if (i < 3) {
@@ -50,15 +50,15 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
         if (blockstate.getBlock() == this) {
             return true;
         } else {
-            if (blockstate.isIn(Blocks.GRASS_BLOCK) || blockstate.isIn(Blocks.DIRT) || blockstate.isIn(Blocks.COARSE_DIRT) ||
-                    blockstate.isIn(Blocks.PODZOL) || blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_SAND.get() ||
+            if (blockstate.matchesBlock(Blocks.GRASS_BLOCK) || blockstate.matchesBlock(Blocks.DIRT) || blockstate.matchesBlock(Blocks.COARSE_DIRT) ||
+                    blockstate.matchesBlock(Blocks.PODZOL) || blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_SAND.get() ||
                     blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_RED_SAND.get()) {
                 BlockPos blockpos = pos.up();
 
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
                     BlockState blockstate1 = worldIn.getBlockState(blockpos.offset(direction));
                     FluidState fluidstate = worldIn.getFluidState(blockpos.offset(direction));
-                    if (fluidstate.isTagged(FluidTags.WATER) || blockstate1.isIn(Blocks.FROSTED_ICE)) {
+                    if (fluidstate.isTagged(FluidTags.WATER) || blockstate1.matchesBlock(Blocks.FROSTED_ICE)) {
                         return true;
                     }
                 }

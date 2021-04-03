@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "impossible_sand",
+  "ingredients": [
+    {
+      "item": "minecraft:sand"
+    }
+  ],
+  "result": {
+    "item": "illegalbuilding:impossible_sand"
+  }
+}

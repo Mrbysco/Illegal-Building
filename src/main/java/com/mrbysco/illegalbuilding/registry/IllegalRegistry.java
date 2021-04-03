@@ -26,7 +26,7 @@ public class IllegalRegistry {
 
     public static final RegistryObject<EntityType<ImpossibleFallingBlockEntity>> IMPOSSIBLE_FALLING_BLOCK = ENTITIES.register("impossible_falling_block",
             () -> register("impossible_falling_block", EntityType.Builder.<ImpossibleFallingBlockEntity>create(ImpossibleFallingBlockEntity::new, EntityClassification.MISC)
-                    .size(0.98F, 0.98F).trackingRange(10).func_233608_b_(20)
+                    .size(0.98F, 0.98F).trackingRange(10).updateInterval(20)
                     .setCustomClientFactory(ImpossibleFallingBlockEntity::new)));
 
     public static final RegistryObject<Block> OFFSET_STONE = BLOCKS.register("offset_stone", () -> new OffsetBlock(Block.Properties.create(Material.ROCK, MaterialColor.STONE).setRequiresTool().hardnessAndResistance(1.5F, 6.0F).notSolid().setOpaque(OffsetBlock::isntSolid)));

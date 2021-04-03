@@ -11,7 +11,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientHandler {
-    public static void registerRenders(final FMLClientSetupEvent event) {
+    public static void onClientSetup(final FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), ImpossibleFallingBlockRenderer::new);
 
         RenderTypeLookup.setRenderLayer(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get(), RenderType.getCutout());

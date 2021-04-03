@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+	"SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "item": "illegalbuilding:offset_stone",
+    "count": 9
+  }
+}

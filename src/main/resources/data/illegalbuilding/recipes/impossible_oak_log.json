@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WW",
+    "WW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:oak_wood"
+    }
+  },
+  "result": {
+    "item": "illegalbuilding:impossible_oak_log",
+    "count": 4
+  }
+}

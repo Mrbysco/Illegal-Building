@@ -69,7 +69,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
             Block block = this.fallTile.getBlock();
             if (this.fallTime++ == 0) {
                 BlockPos blockpos = this.getPosition();
-                if (this.world.getBlockState(blockpos).isIn(block)) {
+                if (this.world.getBlockState(blockpos).matchesBlock(block)) {
                     this.world.removeBlock(blockpos, false);
                 } else if (!this.world.isRemote) {
                     this.remove();
@@ -106,7 +106,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
                 } else {
                     BlockState blockstate = this.world.getBlockState(blockpos1);
                     this.setMotion(this.getMotion().mul(0.7D, -0.5D, 0.7D));
-                    if (!blockstate.isIn(Blocks.MOVING_PISTON)) {
+                    if (!blockstate.matchesBlock(Blocks.MOVING_PISTON)) {
                         this.remove();
                         if (!this.dontSetBlock) {
                             boolean flag2 = blockstate.isReplaceable(new DirectionalPlaceContext(this.world, blockpos1, Direction.DOWN, ItemStack.EMPTY, Direction.UP));

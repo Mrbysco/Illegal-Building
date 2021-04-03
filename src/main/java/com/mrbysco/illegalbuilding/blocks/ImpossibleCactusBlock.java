@@ -31,7 +31,7 @@ public class ImpossibleCactusBlock extends CactusBlock {
         BlockPos blockpos = pos.down();
         if (worldIn.isAirBlock(blockpos)) {
             int i;
-            for(i = 1; worldIn.getBlockState(pos.up(i)).isIn(this); ++i) {
+            for(i = 1; worldIn.getBlockState(pos.up(i)).matchesBlock(this); ++i) {
             }
 
             if (i < 3) {

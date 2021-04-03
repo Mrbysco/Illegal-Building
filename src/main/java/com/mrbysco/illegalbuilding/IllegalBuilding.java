@@ -1,8 +1,10 @@
 package com.mrbysco.illegalbuilding;
 
 import com.mrbysco.illegalbuilding.client.ClientHandler;
+import com.mrbysco.illegalbuilding.handler.RightClickHandler;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -21,8 +23,10 @@ public class IllegalBuilding {
         IllegalRegistry.BLOCKS.register(eventBus);
         IllegalRegistry.ITEMS.register(eventBus);
 
+        MinecraftForge.EVENT_BUS.register(new RightClickHandler());
+
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            eventBus.addListener(ClientHandler::registerRenders);
+            eventBus.addListener(ClientHandler::onClientSetup);
             eventBus.addListener(ClientHandler::registerBlockColors);
         });
     }
