@@ -1,13 +1,13 @@
 modLoader="javafml"
 loaderVersion="[36,)"
-#issueTrackerURL="URL.HERE"
+issueTrackerURL="https://github.com/Mrbysco/Illegal-Building/issues"
 license="MIT"
 
 [[mods]]
 modId="illegalbuilding"
 version="${file.jarVersion}"
 displayName="Illegal Building"
-#displayURL="URL.HERE"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/illegal-building"
 authors="Mrbysco"
 description='''
 Just some blasphemy.
