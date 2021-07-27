@@ -1,12 +1,12 @@
 package com.mrbysco.illegalbuilding.blocks;
 
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IPlantable;
@@ -25,18 +25,12 @@ public class ImpossibleSandBlock extends ImpossibleFallingBlock {
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
         BlockState plant = plantable.getPlant(world, pos.relative(facing));
-        if (plant.getBlock() == IllegalRegistry.IMPOSSIBLE_CACTUS.get())
-            return true;
-
-        if (plant.getBlock() == IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get())
-            return true;
-
-        return false;
+        return plant.getBlock() == IllegalRegistry.IMPOSSIBLE_CACTUS.get() || plant.getBlock() == IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get();
     }
 
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    protected boolean isValidGround(BlockState state, BlockGetter worldIn, BlockPos pos) {
         Block block = state.getBlock();
         return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
     }

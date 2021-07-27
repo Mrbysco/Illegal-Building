@@ -1,38 +1,46 @@
 package com.mrbysco.illegalbuilding.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class OffsetBlock extends DirectionalBlock {
-    protected static final VoxelShape OFFSET_NORTH_AABB = Block.box(0.0D, 0.0D, -8.0D, 16.0D, 16.0D, 8.0D);
-    protected static final VoxelShape OFFSET_SOUTH_AABB = Block.box(0.0D, 0.0D, 24.0D, 16.0D, 16.0D, 8.0D);
-    protected static final VoxelShape OFFSET_WEST_AABB = Block.box(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    protected static final VoxelShape OFFSET_EAST_AABB = Block.box(24.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    protected static final VoxelShape OFFSET_NORTH_AABB = createBox(0.0D, 0.0D, -8.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape OFFSET_SOUTH_AABB = createBox(0.0D, 0.0D, 24.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape OFFSET_WEST_AABB = createBox(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
+    protected static final VoxelShape OFFSET_EAST_AABB = createBox(24.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
+    /**
+     * Required as Shapes.box() doesn't allow the values I gave it :)
+     */
+    private static VoxelShape createBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+        return Shapes.create(minX / 16.0D, minY / 16.0D, minZ / 16.0D, maxX / 16.0D, maxY / 16.0D, maxZ / 16.0D);
+    }
 
     public OffsetBlock(Block.Properties builder) {
         super(builder);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
+    public static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
         return true;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         Direction facing = (Direction)state.getValue(FACING);
 
         switch (facing){
@@ -48,7 +56,7 @@ public class OffsetBlock extends DirectionalBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
     }
 
@@ -63,12 +71,12 @@ public class OffsetBlock extends DirectionalBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
         return true;
     }
 }

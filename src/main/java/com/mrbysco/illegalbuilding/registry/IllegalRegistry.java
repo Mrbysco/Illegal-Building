@@ -6,16 +6,16 @@ import com.mrbysco.illegalbuilding.blocks.ImpossibleSandBlock;
 import com.mrbysco.illegalbuilding.blocks.ImpossibleSugarCaneBlock;
 import com.mrbysco.illegalbuilding.blocks.OffsetBlock;
 import com.mrbysco.illegalbuilding.entity.ImpossibleFallingBlockEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -25,7 +25,7 @@ public class IllegalRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Reference.MOD_ID);
 
     public static final RegistryObject<EntityType<ImpossibleFallingBlockEntity>> IMPOSSIBLE_FALLING_BLOCK = ENTITIES.register("impossible_falling_block",
-            () -> register("impossible_falling_block", EntityType.Builder.<ImpossibleFallingBlockEntity>of(ImpossibleFallingBlockEntity::new, EntityClassification.MISC)
+            () -> register("impossible_falling_block", EntityType.Builder.<ImpossibleFallingBlockEntity>of(ImpossibleFallingBlockEntity::new, MobCategory.MISC)
                     .sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(20)
                     .setCustomClientFactory(ImpossibleFallingBlockEntity::new)));
 

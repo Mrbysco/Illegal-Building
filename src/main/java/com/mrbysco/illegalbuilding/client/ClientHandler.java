@@ -2,21 +2,24 @@ package com.mrbysco.illegalbuilding.client;
 
 import com.mrbysco.illegalbuilding.client.renderer.ImpossibleFallingBlockRenderer;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientHandler {
     public static void onClientSetup(final FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), ImpossibleFallingBlockRenderer::new);
-
-        RenderTypeLookup.setRenderLayer(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get(), RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(IllegalRegistry.IMPOSSIBLE_CACTUS.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(IllegalRegistry.IMPOSSIBLE_CACTUS.get(), RenderType.cutout());
     }
+
+    public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), ImpossibleFallingBlockRenderer::new);
+    }
+
 
     public static void registerBlockColors(ColorHandlerEvent.Item event) {
         BlockColors blockColors = event.getBlockColors();

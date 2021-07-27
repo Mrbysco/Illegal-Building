@@ -2,60 +2,60 @@ package com.mrbysco.illegalbuilding.entity;
 
 import com.mrbysco.illegalbuilding.blocks.ImpossibleFallingBlock;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ConcretePowderBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.item.FallingBlockEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.DirectionalPlaceContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ConcretePowderBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
     public boolean onRoof;
 
-    public ImpossibleFallingBlockEntity(World worldIn, double x, double y, double z, BlockState fallingBlockState) {
+    public ImpossibleFallingBlockEntity(Level worldIn, double x, double y, double z, BlockState fallingBlockState) {
         super(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), worldIn);
         this.blockState = fallingBlockState;
         this.blocksBuilding = true;
         this.setPos(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);
-        this.setDeltaMovement(Vector3d.ZERO);
+        this.setDeltaMovement(Vec3.ZERO);
         this.xo = x;
         this.yo = y;
         this.zo = z;
         this.setStartPos(this.blockPosition());
     }
 
-    public ImpossibleFallingBlockEntity(EntityType<? extends FallingBlockEntity> p_i50218_1_, World world) {
+    public ImpossibleFallingBlockEntity(EntityType<? extends FallingBlockEntity> p_i50218_1_, Level world) {
         super(p_i50218_1_, world);
     }
 
-    public ImpossibleFallingBlockEntity(FMLPlayMessages.SpawnEntity spawnEntity, World worldIn) {
+    public ImpossibleFallingBlockEntity(FMLPlayMessages.SpawnEntity spawnEntity, Level worldIn) {
         this(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), worldIn);
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -64,7 +64,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
      */
     public void tick() {
         if (this.blockState.isAir()) {
-            this.remove();
+            this.discard();
         } else {
             Block block = this.blockState.getBlock();
             if (this.time++ == 0) {
@@ -72,7 +72,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
                 if (this.level.getBlockState(blockpos).is(block)) {
                     this.level.removeBlock(blockpos, false);
                 } else if (!this.level.isClientSide) {
-                    this.remove();
+                    this.discard();
                     return;
                 }
             }
@@ -88,8 +88,8 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
                 boolean flag1 = flag && this.level.getFluidState(blockpos1).is(FluidTags.WATER);
                 double d0 = this.getDeltaMovement().lengthSqr();
                 if (flag && d0 > 1.0D) {
-                    BlockRayTraceResult blockraytraceresult = this.level.clip(new RayTraceContext(new Vector3d(this.xo, this.yo, this.zo), this.position(), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.SOURCE_ONLY, this));
-                    if (blockraytraceresult.getType() != RayTraceResult.Type.MISS && this.level.getFluidState(blockraytraceresult.getBlockPos()).is(FluidTags.WATER)) {
+                    BlockHitResult blockraytraceresult = this.level.clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
+                    if (blockraytraceresult.getType() != HitResult.Type.MISS && this.level.getFluidState(blockraytraceresult.getBlockPos()).is(FluidTags.WATER)) {
                         blockpos1 = blockraytraceresult.getBlockPos();
                         flag1 = true;
                     }
@@ -101,13 +101,13 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
                             this.spawnAtLocation(block);
                         }
 
-                        this.remove();
+                        this.discard();
                     }
                 } else {
                     BlockState blockstate = this.level.getBlockState(blockpos1);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
                     if (!blockstate.is(Blocks.MOVING_PISTON)) {
-                        this.remove();
+                        this.discard();
                         if (!this.cancelDrop) {
                             boolean flag2 = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockpos1, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
                             boolean flag3 = ImpossibleFallingBlock.isFree(this.level.getBlockState(blockpos1.above())) && (!flag || !flag1);
@@ -125,29 +125,40 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
                                         ((ImpossibleFallingBlock)block).onEndFalling(this.level, blockpos1, this.blockState, blockstate, this);
                                     }
 
-                                    if (this.blockData != null && this.blockState.hasTileEntity()) {
-                                        TileEntity tileentity = this.level.getBlockEntity(blockpos1);
+                                    if (this.blockData != null && this.blockState.hasBlockEntity()) {
+                                        BlockEntity tileentity = this.level.getBlockEntity(blockpos1);
                                         if (tileentity != null) {
-                                            CompoundNBT compoundnbt = tileentity.save(new CompoundNBT());
+                                            CompoundTag compoundnbt = tileentity.save(new CompoundTag());
 
                                             for(String s : this.blockData.getAllKeys()) {
-                                                INBT inbt = this.blockData.get(s);
+                                                Tag inbt = this.blockData.get(s);
                                                 if (!"x".equals(s) && !"y".equals(s) && !"z".equals(s)) {
                                                     compoundnbt.put(s, inbt.copy());
                                                 }
                                             }
 
-                                            tileentity.load(this.blockState, compoundnbt);
+                                            try {
+                                                tileentity.load(compoundnbt);
+                                            } catch (Exception var16) {
+                                                LOGGER.error("Failed to load block entity from impossible falling block", var16);
+                                            }
+
                                             tileentity.setChanged();
                                         }
                                     }
                                 } else if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                    this.discard();
+                                    this.callOnBrokenAfterFall(block, blockpos1);
                                     this.spawnAtLocation(block);
                                 }
                             } else if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                this.discard();
+                                this.callOnBrokenAfterFall(block, blockpos1);
                                 this.spawnAtLocation(block);
                             }
                         } else if (block instanceof ImpossibleFallingBlock) {
+                            this.discard();
+                            this.callOnBrokenAfterFall(block, blockpos1);
                             ((ImpossibleFallingBlock)block).onBroken(this.level, blockpos1, this);
                         }
                     }
@@ -160,21 +171,20 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 
 
     @Override
-    public void move(MoverType typeIn, Vector3d pos) {
+    public void move(MoverType typeIn, Vec3 pos) {
         super.move(typeIn, pos);
         if (!this.noPhysics) {
             this.onRoof = this.verticalCollision && pos.y > 0.0D;
 
-            int x = MathHelper.floor(this.getX());
-            int y = MathHelper.floor(this.getY() + (double)0.2F);
-            int z = MathHelper.floor(this.getZ());
+            int x = Mth.floor(this.getX());
+            int y = Mth.floor(this.getY() + (double)0.2F);
+            int z = Mth.floor(this.getZ());
             BlockPos blockpos = new BlockPos(x, y, z);
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.isAir(this.level, blockpos)) {
+            if (blockstate.isAir()) {
                 BlockPos blockpos1 = blockpos.below();
                 BlockState blockstate1 = this.level.getBlockState(blockpos1);
-                Block block1 = blockstate1.getBlock();
-                if (block1.is(BlockTags.FENCES) || block1.is(BlockTags.WALLS) || block1.is(BlockTags.FENCE_GATES)) {
+                if (blockstate1.is(BlockTags.FENCES) || blockstate1.is(BlockTags.WALLS) || blockstate1.is(BlockTags.FENCE_GATES)) {
                     blockstate = blockstate1;
                     blockpos = blockpos1;
                 }
@@ -185,14 +195,14 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
     }
 
     @Override
-    public CompoundNBT saveWithoutId(CompoundNBT compound) {
+    public CompoundTag saveWithoutId(CompoundTag compound) {
         compound = super.saveWithoutId(compound);
         compound.putBoolean("OnRoof", this.onRoof);
         return compound;
     }
 
     @Override
-    public void load(CompoundNBT compound) {
+    public void load(CompoundTag compound) {
         super.load(compound);
         this.onRoof = compound.getBoolean("OnRoof");
     }

@@ -16,7 +16,7 @@ group = 'com.mrbysco.illegalbuilding' // http://maven.apache.org/guides/mini/gui
 archivesBaseName = "IllegalBuilding-${mc_version}"
 
 // Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -38,7 +38,7 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             mods {
-                spelled {
+                illegalbuilding {
                     source sourceSets.main
                 }
             }
@@ -55,7 +55,7 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             mods {
-                spelled {
+                illegalbuilding {
                     source sourceSets.main
                 }
             }
@@ -72,10 +72,10 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'spelled', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'illegalbuilding', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                spelled {
+                illegalbuilding {
                     source sourceSets.main
                 }
             }
@@ -88,27 +88,16 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        url = "https://maven.theillusivec4.top/"
-    }
-    maven { url 'https://maven.blamejared.com' }
-    maven {
         name 'JEI maven'
         url = "https://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        name "brassgoggledcoders"
-        url "https://maven.teamacronymcoders.com/"
-    }
-    maven {
-        url "https://www.cursemaven.com"
     }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
+//    compileOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
+//    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

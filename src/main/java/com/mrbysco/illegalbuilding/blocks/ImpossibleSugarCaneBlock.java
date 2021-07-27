@@ -1,17 +1,17 @@
 package com.mrbysco.illegalbuilding.blocks;
 
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SugarCaneBlock;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SugarCaneBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
@@ -22,7 +22,7 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         if (worldIn.isEmptyBlock(pos.below())) {
             int i;
             for(i = 1; worldIn.getBlockState(pos.above(i)).is(this); ++i) {
@@ -43,7 +43,7 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         BlockState soil = worldIn.getBlockState(pos.above());
         if (soil.canSustainPlant(worldIn, pos.above(), Direction.DOWN, this)) return true;
         BlockState blockstate = worldIn.getBlockState(pos.above());
@@ -69,7 +69,7 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
         BlockState plant = plantable.getPlant(world, pos.relative(facing));
         if (plant.getBlock() == this)
             return true;

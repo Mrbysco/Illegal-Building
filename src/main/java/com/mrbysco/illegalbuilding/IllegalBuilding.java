@@ -27,6 +27,7 @@ public class IllegalBuilding {
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             eventBus.addListener(ClientHandler::onClientSetup);
+            eventBus.addListener(ClientHandler::registerEntityRenders);
             eventBus.addListener(ClientHandler::registerBlockColors);
         });
     }
