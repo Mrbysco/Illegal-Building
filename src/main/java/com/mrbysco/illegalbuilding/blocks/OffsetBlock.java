@@ -17,9 +17,9 @@ import net.minecraft.world.IBlockReader;
 
 public class OffsetBlock extends DirectionalBlock {
     protected static final VoxelShape OFFSET_NORTH_AABB = Block.box(0.0D, 0.0D, -8.0D, 16.0D, 16.0D, 8.0D);
-    protected static final VoxelShape OFFSET_SOUTH_AABB = Block.box(0.0D, 0.0D, 24.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape OFFSET_SOUTH_AABB = Block.box(0.0D, 0.0D, 8D, 16.0D, 16.0D, 24.0D);
     protected static final VoxelShape OFFSET_WEST_AABB = Block.box(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    protected static final VoxelShape OFFSET_EAST_AABB = Block.box(24.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
+    protected static final VoxelShape OFFSET_EAST_AABB = Block.box(8.0D, 0.0D, 0.0D, 24.0D, 16.0D, 16.0D);
     public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
     public OffsetBlock(Block.Properties builder) {

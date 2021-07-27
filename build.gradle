@@ -38,7 +38,7 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             mods {
-                spelled {
+                illegalbuilding {
                     source sourceSets.main
                 }
             }
@@ -55,7 +55,7 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             mods {
-                spelled {
+                illegalbuilding {
                     source sourceSets.main
                 }
             }
@@ -72,10 +72,10 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'spelled', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'illegalbuilding', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                spelled {
+                illegalbuilding {
                     source sourceSets.main
                 }
             }
@@ -88,19 +88,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        url = "https://maven.theillusivec4.top/"
-    }
-    maven { url 'https://maven.blamejared.com' }
-    maven {
         name 'JEI maven'
         url = "https://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        name "brassgoggledcoders"
-        url "https://maven.teamacronymcoders.com/"
-    }
-    maven {
-        url "https://www.cursemaven.com"
     }
 }
 
