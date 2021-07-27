@@ -22,10 +22,10 @@ public class ImpossibleFallingBlock extends FallingBlock {
 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-        if (worldIn.isAirBlock(pos.up()) || canFallThrough(worldIn.getBlockState(pos.up())) && pos.getY() <= 256) {
+        if (worldIn.isEmptyBlock(pos.above()) || isFree(worldIn.getBlockState(pos.above())) && pos.getY() <= 256) {
             ImpossibleFallingBlockEntity fallingblockentity = new ImpossibleFallingBlockEntity(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, worldIn.getBlockState(pos));
             this.onStartFalling(fallingblockentity);
-            worldIn.addEntity(fallingblockentity);
+            worldIn.addFreshEntity(fallingblockentity);
         }
     }
 
@@ -41,8 +41,8 @@ public class ImpossibleFallingBlock extends FallingBlock {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (rand.nextInt(16) == 0) {
-            BlockPos blockpos = pos.up();
-            if (worldIn.isAirBlock(blockpos) || canFallThrough(worldIn.getBlockState(blockpos))) {
+            BlockPos blockpos = pos.above();
+            if (worldIn.isEmptyBlock(blockpos) || isFree(worldIn.getBlockState(blockpos))) {
                 double d0 = (double)pos.getX() + rand.nextDouble();
                 double d1 = (double)pos.getY() - 0.05D;
                 double d2 = (double)pos.getZ() + rand.nextDouble();

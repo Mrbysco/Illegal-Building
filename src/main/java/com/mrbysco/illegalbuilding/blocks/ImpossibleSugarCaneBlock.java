@@ -23,19 +23,19 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (worldIn.isAirBlock(pos.down())) {
+        if (worldIn.isEmptyBlock(pos.below())) {
             int i;
-            for(i = 1; worldIn.getBlockState(pos.up(i)).matchesBlock(this); ++i) {
+            for(i = 1; worldIn.getBlockState(pos.above(i)).is(this); ++i) {
             }
 
             if (i < 3) {
-                int j = state.get(AGE);
+                int j = state.getValue(AGE);
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     if (j == 15) {
-                        worldIn.setBlockState(pos.down(), this.getDefaultState());
-                        worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(0)), 4);
+                        worldIn.setBlockAndUpdate(pos.below(), this.defaultBlockState());
+                        worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(0)), 4);
                     } else {
-                        worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(j + 1)), 4);
+                        worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
                     }
                 }
             }
@@ -43,22 +43,22 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        BlockState soil = worldIn.getBlockState(pos.up());
-        if (soil.canSustainPlant(worldIn, pos.up(), Direction.DOWN, this)) return true;
-        BlockState blockstate = worldIn.getBlockState(pos.up());
+    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        BlockState soil = worldIn.getBlockState(pos.above());
+        if (soil.canSustainPlant(worldIn, pos.above(), Direction.DOWN, this)) return true;
+        BlockState blockstate = worldIn.getBlockState(pos.above());
         if (blockstate.getBlock() == this) {
             return true;
         } else {
-            if (blockstate.matchesBlock(Blocks.GRASS_BLOCK) || blockstate.matchesBlock(Blocks.DIRT) || blockstate.matchesBlock(Blocks.COARSE_DIRT) ||
-                    blockstate.matchesBlock(Blocks.PODZOL) || blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_SAND.get() ||
+            if (blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(Blocks.DIRT) || blockstate.is(Blocks.COARSE_DIRT) ||
+                    blockstate.is(Blocks.PODZOL) || blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_SAND.get() ||
                     blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_RED_SAND.get()) {
-                BlockPos blockpos = pos.up();
+                BlockPos blockpos = pos.above();
 
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
-                    BlockState blockstate1 = worldIn.getBlockState(blockpos.offset(direction));
-                    FluidState fluidstate = worldIn.getFluidState(blockpos.offset(direction));
-                    if (fluidstate.isTagged(FluidTags.WATER) || blockstate1.matchesBlock(Blocks.FROSTED_ICE)) {
+                    BlockState blockstate1 = worldIn.getBlockState(blockpos.relative(direction));
+                    FluidState fluidstate = worldIn.getFluidState(blockpos.relative(direction));
+                    if (fluidstate.is(FluidTags.WATER) || blockstate1.is(Blocks.FROSTED_ICE)) {
                         return true;
                     }
                 }
@@ -70,7 +70,7 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 
     @Override
     public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
-        BlockState plant = plantable.getPlant(world, pos.offset(facing));
+        BlockState plant = plantable.getPlant(world, pos.relative(facing));
         if (plant.getBlock() == this)
             return true;
 

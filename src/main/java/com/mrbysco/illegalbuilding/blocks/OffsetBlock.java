@@ -16,15 +16,15 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class OffsetBlock extends DirectionalBlock {
-    protected static final VoxelShape OFFSET_NORTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, -8.0D, 16.0D, 16.0D, 8.0D);
-    protected static final VoxelShape OFFSET_SOUTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 24.0D, 16.0D, 16.0D, 8.0D);
-    protected static final VoxelShape OFFSET_WEST_AABB = Block.makeCuboidShape(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    protected static final VoxelShape OFFSET_EAST_AABB = Block.makeCuboidShape(24.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    protected static final VoxelShape OFFSET_NORTH_AABB = Block.box(0.0D, 0.0D, -8.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape OFFSET_SOUTH_AABB = Block.box(0.0D, 0.0D, 24.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape OFFSET_WEST_AABB = Block.box(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
+    protected static final VoxelShape OFFSET_EAST_AABB = Block.box(24.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
     public OffsetBlock(Block.Properties builder) {
         super(builder);
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     public static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
@@ -33,7 +33,7 @@ public class OffsetBlock extends DirectionalBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction facing = (Direction)state.get(FACING);
+        Direction facing = (Direction)state.getValue(FACING);
 
         switch (facing){
             default:
@@ -49,21 +49,21 @@ public class OffsetBlock extends DirectionalBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 

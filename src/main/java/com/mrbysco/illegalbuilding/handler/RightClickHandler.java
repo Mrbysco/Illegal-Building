@@ -7,7 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
@@ -27,38 +26,38 @@ public class RightClickHandler {
 		ItemStack stack = event.getItemStack();
 		if(state.getBlock() instanceof ImpossibleSandBlock) {
 			BlockRayTraceResult hitVec = event.getHitVec();
-			BlockPos downPos = pos.down();
-			if(hitVec.getFace() == Direction.DOWN) {
+			BlockPos downPos = pos.below();
+			if(hitVec.getDirection() == Direction.DOWN) {
 				if(world.getBlockState(downPos).getMaterial().isReplaceable()) {
 					PlayerEntity player = event.getPlayer();
 					if (stack.getItem() == Items.SUGAR_CANE) {
-						BlockState sugarCane = IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get().getDefaultState();
-						if(sugarCane.isValidPosition(world, downPos)) {
-							world.setBlockState(downPos, sugarCane, 11);
-							sugarCane.getBlock().onBlockPlacedBy(world, downPos, sugarCane, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE_ITEM.get()));
+						BlockState sugarCane = IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get().defaultBlockState();
+						if(sugarCane.canSurvive(world, downPos)) {
+							world.setBlock(downPos, sugarCane, 11);
+							sugarCane.getBlock().setPlacedBy(world, downPos, sugarCane, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE_ITEM.get()));
 							if (player instanceof ServerPlayerEntity) {
 								CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)player, downPos, stack);
 							}
 							SoundType soundtype = sugarCane.getSoundType(world, pos, player);
 							world.playSound(player, downPos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
-							if (player == null || !player.abilities.isCreativeMode) {
+							if (player == null || !player.abilities.instabuild) {
 								stack.shrink(1);
 							}
 						}
 					}
 					if (stack.getItem() == Items.CACTUS) {
-						BlockState cactusState = IllegalRegistry.IMPOSSIBLE_CACTUS.get().getDefaultState();
-						if(cactusState.isValidPosition(world, downPos)) {
-							world.setBlockState(downPos, cactusState, 11);
-							cactusState.getBlock().onBlockPlacedBy(world, downPos, cactusState, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE_ITEM.get()));
+						BlockState cactusState = IllegalRegistry.IMPOSSIBLE_CACTUS.get().defaultBlockState();
+						if(cactusState.canSurvive(world, downPos)) {
+							world.setBlock(downPos, cactusState, 11);
+							cactusState.getBlock().setPlacedBy(world, downPos, cactusState, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE_ITEM.get()));
 							if (player instanceof ServerPlayerEntity) {
 								CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)player, downPos, stack);
 							}
 							SoundType soundtype = cactusState.getSoundType(world, pos, player);
 							world.playSound(player, downPos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
-							if (player == null || !player.abilities.isCreativeMode) {
+							if (player == null || !player.abilities.instabuild) {
 								stack.shrink(1);
 							}
 						}
