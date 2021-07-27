@@ -18,9 +18,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class OffsetBlock extends DirectionalBlock {
     protected static final VoxelShape OFFSET_NORTH_AABB = createBox(0.0D, 0.0D, -8.0D, 16.0D, 16.0D, 8.0D);
-    protected static final VoxelShape OFFSET_SOUTH_AABB = createBox(0.0D, 0.0D, 24.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape OFFSET_SOUTH_AABB = createBox(0.0D, 0.0D, 8D, 16.0D, 16.0D, 24.0D);
     protected static final VoxelShape OFFSET_WEST_AABB = createBox(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    protected static final VoxelShape OFFSET_EAST_AABB = createBox(24.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
+    protected static final VoxelShape OFFSET_EAST_AABB = createBox(8.0D, 0.0D, 0.0D, 24.0D, 16.0D, 16.0D);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     /**

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "illegalbuilding:impossible_oak_log",
+    "illegalbuilding:impossible_spruce_log",
+    "illegalbuilding:impossible_birch_log",
+    "illegalbuilding:impossible_jungle_log",
+    "illegalbuilding:impossible_acacia_log",
+    "illegalbuilding:impossible_dark_oak_log"
+  ]
+}

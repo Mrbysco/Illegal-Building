@@ -31,12 +31,12 @@ public class IllegalRegistry {
 
     public static final RegistryObject<Block> OFFSET_STONE = BLOCKS.register("offset_stone", () -> new OffsetBlock(Block.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F).noOcclusion().isRedstoneConductor(OffsetBlock::isntSolid)));
 
-    public static final RegistryObject<Block> IMPOSSIBLE_OAK_LOG = BLOCKS.register("impossible_oak_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.PODZOL)));
-    public static final RegistryObject<Block> IMPOSSIBLE_SPRUCE_LOG = BLOCKS.register("impossible_spruce_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN)));
-    public static final RegistryObject<Block> IMPOSSIBLE_BIRCH_LOG = BLOCKS.register("impossible_birch_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.QUARTZ)));
-    public static final RegistryObject<Block> IMPOSSIBLE_JUNGLE_LOG = BLOCKS.register("impossible_jungle_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.PODZOL)));
-    public static final RegistryObject<Block> IMPOSSIBLE_ACACIA_LOG = BLOCKS.register("impossible_acacia_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.STONE)));
-    public static final RegistryObject<Block> IMPOSSIBLE_DARK_OAK_LOG = BLOCKS.register("impossible_dark_oak_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN)));
+    public static final RegistryObject<Block> IMPOSSIBLE_OAK_LOG = BLOCKS.register("impossible_oak_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F, 3.0F)));
+    public static final RegistryObject<Block> IMPOSSIBLE_SPRUCE_LOG = BLOCKS.register("impossible_spruce_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(2.0F, 3.0F)));
+    public static final RegistryObject<Block> IMPOSSIBLE_BIRCH_LOG = BLOCKS.register("impossible_birch_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.QUARTZ).strength(2.0F, 3.0F)));
+    public static final RegistryObject<Block> IMPOSSIBLE_JUNGLE_LOG = BLOCKS.register("impossible_jungle_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F, 3.0F)));
+    public static final RegistryObject<Block> IMPOSSIBLE_ACACIA_LOG = BLOCKS.register("impossible_acacia_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.STONE).strength(2.0F, 3.0F)));
+    public static final RegistryObject<Block> IMPOSSIBLE_DARK_OAK_LOG = BLOCKS.register("impossible_dark_oak_log", () -> new Block(Block.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(2.0F, 3.0F)));
 
     public static final RegistryObject<Block> IMPOSSIBLE_SAND = BLOCKS.register("impossible_sand", () -> new ImpossibleSandBlock(14406560, Block.Properties.of(Material.SAND, MaterialColor.SAND).strength(0.5F).sound(SoundType.SAND)));
     public static final RegistryObject<Block> IMPOSSIBLE_RED_SAND = BLOCKS.register("impossible_red_sand", () -> new ImpossibleSandBlock(11098145, Block.Properties.of(Material.SAND, MaterialColor.COLOR_ORANGE).strength(0.5F).sound(SoundType.SAND)));
