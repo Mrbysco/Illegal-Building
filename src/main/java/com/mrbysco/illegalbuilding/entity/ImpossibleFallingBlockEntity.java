@@ -28,8 +28,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages.SpawnEntity;
 
 public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
     public boolean onRoof;
@@ -50,7 +50,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
         super(p_i50218_1_, world);
     }
 
-    public ImpossibleFallingBlockEntity(FMLPlayMessages.SpawnEntity spawnEntity, Level worldIn) {
+    public ImpossibleFallingBlockEntity(SpawnEntity spawnEntity, Level worldIn) {
         this(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), worldIn);
     }
 
