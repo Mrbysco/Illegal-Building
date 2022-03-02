@@ -77,8 +77,8 @@ public class IllegalDataGen {
 		}
 
 		@Override
-		protected void validate(Map<ResourceLocation, LootTable> map, @Nonnull ValidationContext validationtracker) {
-			map.forEach((name, table) -> LootTables.validate(validationtracker, name, table));
+		protected void validate(Map<ResourceLocation, LootTable> map, @Nonnull ValidationContext validationContext) {
+			map.forEach((name, table) -> LootTables.validate(validationContext, name, table));
 		}
 	}
 }

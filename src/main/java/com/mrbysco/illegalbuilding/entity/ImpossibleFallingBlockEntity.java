@@ -1,5 +1,6 @@
 package com.mrbysco.illegalbuilding.entity;
 
+import com.mrbysco.illegalbuilding.IllegalBuilding;
 import com.mrbysco.illegalbuilding.blocks.ImpossibleFallingBlock;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.core.BlockPos;
@@ -126,24 +127,24 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
                                     }
 
                                     if (this.blockData != null && this.blockState.hasBlockEntity()) {
-                                        BlockEntity tileentity = this.level.getBlockEntity(blockpos1);
-                                        if (tileentity != null) {
-                                            CompoundTag compoundnbt = tileentity.save(new CompoundTag());
+                                        BlockEntity blockEntity = this.level.getBlockEntity(blockpos1);
+                                        if (blockEntity != null) {
+                                            CompoundTag compoundTag = blockEntity.saveWithoutMetadata();
 
                                             for(String s : this.blockData.getAllKeys()) {
                                                 Tag inbt = this.blockData.get(s);
                                                 if (!"x".equals(s) && !"y".equals(s) && !"z".equals(s)) {
-                                                    compoundnbt.put(s, inbt.copy());
+                                                    compoundTag.put(s, inbt.copy());
                                                 }
                                             }
 
                                             try {
-                                                tileentity.load(compoundnbt);
+                                                blockEntity.load(compoundTag);
                                             } catch (Exception var16) {
-                                                LOGGER.error("Failed to load block entity from impossible falling block", var16);
+                                                IllegalBuilding.LOGGER.error("Failed to load block entity from impossible falling block", var16);
                                             }
 
-                                            tileentity.setChanged();
+                                            blockEntity.setChanged();
                                         }
                                     }
                                 } else if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
