@@ -1,5 +1,6 @@
 {
     "parent": "illegalbuilding:block/upsidedown_cross",
+    "render_type": "minecraft:cutout",
     "textures": {
         "cross": "block/sugar_cane"
     }

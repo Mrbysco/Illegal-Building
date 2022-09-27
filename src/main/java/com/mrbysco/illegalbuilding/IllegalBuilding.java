@@ -14,21 +14,20 @@ import org.slf4j.Logger;
 
 @Mod(Reference.MOD_ID)
 public class IllegalBuilding {
-    public static final Logger LOGGER = LogUtils.getLogger();
+	public static final Logger LOGGER = LogUtils.getLogger();
 
-    public IllegalBuilding() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public IllegalBuilding() {
+		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        IllegalRegistry.ENTITIES.register(eventBus);
-        IllegalRegistry.BLOCKS.register(eventBus);
-        IllegalRegistry.ITEMS.register(eventBus);
+		IllegalRegistry.ENTITY_TYPES.register(eventBus);
+		IllegalRegistry.BLOCKS.register(eventBus);
+		IllegalRegistry.ITEMS.register(eventBus);
 
-        MinecraftForge.EVENT_BUS.register(new RightClickHandler());
+		MinecraftForge.EVENT_BUS.register(new RightClickHandler());
 
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            eventBus.addListener(ClientHandler::onClientSetup);
-            eventBus.addListener(ClientHandler::registerEntityRenders);
-            eventBus.addListener(ClientHandler::registerBlockColors);
-        });
-    }
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			eventBus.addListener(ClientHandler::registerEntityRenders);
+			eventBus.addListener(ClientHandler::registerBlockColors);
+		});
+	}
 }

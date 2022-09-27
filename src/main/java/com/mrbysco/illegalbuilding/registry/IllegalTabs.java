@@ -7,10 +7,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class IllegalTabs {
-    public static final CreativeModeTab ILLEGAL_TAB = new CreativeModeTab(Reference.MOD_ID) {
-        @OnlyIn(Dist.CLIENT)
-        public ItemStack makeIcon() {
-            return new ItemStack(IllegalRegistry.OFFSET_STONE.get());
-        }
-    };
+	public static final CreativeModeTab ILLEGAL_TAB = new CreativeModeTab(Reference.MOD_ID) {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack makeIcon() {
+			return new ItemStack(IllegalRegistry.OFFSET_STONE.get());
+		}
+	};
 }

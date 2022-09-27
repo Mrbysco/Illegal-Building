@@ -1,5 +1,6 @@
 {   "parent": "block/block",
     "ambientocclusion": false,
+  	"render_type": "minecraft:cutout",
     "textures": {
 		"particle": "block/cactus_side",
 		"bottom": "block/cactus_top",
