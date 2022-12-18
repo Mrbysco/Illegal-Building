@@ -1,17 +1,16 @@
 package com.mrbysco.illegalbuilding.datagen;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -22,52 +21,50 @@ import net.minecraftforge.registries.RegistryObject;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import static com.mrbysco.illegalbuilding.registry.IllegalRegistry.*;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IllegalDataGen {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
+		PackOutput packOutput = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(event.includeServer(), new IllegalLoot(generator));
+			generator.addProvider(event.includeServer(), new IllegalLoot(packOutput));
 		}
 	}
 
 	private static class IllegalLoot extends LootTableProvider {
-		public IllegalLoot(DataGenerator gen) {
-			super(gen);
+		public IllegalLoot(PackOutput packOutput) {
+			super(packOutput, Set.of(), List.of(
+					new SubProviderEntry(IllegalBlocks::new, LootContextParamSets.BLOCK)
+			));
 		}
 
-		@Override
-		protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
-			return ImmutableList.of(Pair.of(FarmingBlocks::new, LootContextParamSets.BLOCK));
-		}
+		private static class IllegalBlocks extends BlockLootSubProvider {
 
-		private static class FarmingBlocks extends BlockLoot {
+			protected IllegalBlocks() {
+				super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+			}
 
 			@Override
-			protected void addTables() {
-				this.dropSelf(OFFSET_STONE.get());
+			protected void generate() {
+				this.dropSelf(IllegalRegistry.OFFSET_STONE.get());
 
-				this.dropSelf(IMPOSSIBLE_OAK_LOG.get());
-				this.dropSelf(IMPOSSIBLE_SPRUCE_LOG.get());
-				this.dropSelf(IMPOSSIBLE_BIRCH_LOG.get());
-				this.dropSelf(IMPOSSIBLE_JUNGLE_LOG.get());
-				this.dropSelf(IMPOSSIBLE_ACACIA_LOG.get());
-				this.dropSelf(IMPOSSIBLE_DARK_OAK_LOG.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_OAK_LOG.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_SPRUCE_LOG.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_BIRCH_LOG.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_ACACIA_LOG.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.get());
 
-				this.dropSelf(IMPOSSIBLE_SAND.get());
-				this.dropSelf(IMPOSSIBLE_RED_SAND.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_SAND.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_RED_SAND.get());
 
-				this.dropSelf(IMPOSSIBLE_SUGAR_CANE.get());
-				this.dropSelf(IMPOSSIBLE_CACTUS.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get());
+				this.dropSelf(IllegalRegistry.IMPOSSIBLE_CACTUS.get());
 			}
 
 			@Override
