@@ -30,7 +30,7 @@ public class ImpossibleFallingBlockRenderer extends EntityRenderer<ImpossibleFal
 			Level level = impossibleFallingBlockEntity.getLevel();
 			if (blockstate != level.getBlockState(impossibleFallingBlockEntity.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
 				poseStack.pushPose();
-				BlockPos blockpos = new BlockPos(impossibleFallingBlockEntity.getX(), impossibleFallingBlockEntity.getBoundingBox().maxY, impossibleFallingBlockEntity.getZ());
+				BlockPos blockpos = BlockPos.containing(impossibleFallingBlockEntity.getX(), impossibleFallingBlockEntity.getBoundingBox().maxY, impossibleFallingBlockEntity.getZ());
 				poseStack.translate(-0.5D, 0.0D, -0.5D);
 				var model = this.dispatcher.getBlockModel(blockstate);
 				for (var renderType : model.getRenderTypes(blockstate, RandomSource.create(blockstate.getSeed(impossibleFallingBlockEntity.getStartPos())), net.minecraftforge.client.model.data.ModelData.EMPTY))

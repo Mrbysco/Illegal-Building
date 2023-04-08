@@ -19,7 +19,7 @@ public class IllegalTabs {
 		ILLEGAL_TAB = event.registerCreativeModeTab(new ResourceLocation(Reference.MOD_ID, "tab"), builder ->
 				builder.icon(() -> new ItemStack(IllegalRegistry.OFFSET_STONE.get()))
 						.title(Component.translatable("itemGroup.illegalbuilding"))
-						.displayItems((features, output, hasPermissions) -> {
+						.displayItems((displayParameters, output) -> {
 							List<ItemStack> stacks = IllegalRegistry.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
 							output.acceptAll(stacks);
 						}));
