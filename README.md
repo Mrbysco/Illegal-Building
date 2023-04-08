@@ -1,3 +1,6 @@
+[![build](https://github.com/Mrbysco/Illegal-Building/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/Illegal-Building/actions/workflows/build.yml)
+[![](http://cf.way2muchnoise.eu/versions/462624.svg)](https://www.curseforge.com/minecraft/mc-mods/illegal-building)
+
 # Illegal Building #
 
 ## About ##
