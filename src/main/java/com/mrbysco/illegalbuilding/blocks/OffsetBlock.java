@@ -40,7 +40,7 @@ public class OffsetBlock extends DirectionalBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		Direction facing = (Direction) state.getValue(FACING);
 
 		switch (facing) {

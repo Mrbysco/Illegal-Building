@@ -27,7 +27,7 @@ public class ImpossibleFallingBlockRenderer extends EntityRenderer<ImpossibleFal
 	public void render(ImpossibleFallingBlockEntity impossibleFallingBlockEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
 		BlockState blockstate = impossibleFallingBlockEntity.getBlockState();
 		if (blockstate.getRenderShape() == RenderShape.MODEL) {
-			Level level = impossibleFallingBlockEntity.getLevel();
+			Level level = impossibleFallingBlockEntity.level();
 			if (blockstate != level.getBlockState(impossibleFallingBlockEntity.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
 				poseStack.pushPose();
 				BlockPos blockpos = BlockPos.containing(impossibleFallingBlockEntity.getX(), impossibleFallingBlockEntity.getBoundingBox().maxY, impossibleFallingBlockEntity.getZ());

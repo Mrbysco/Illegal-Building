@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import com.mrbysco.illegalbuilding.client.ClientHandler;
 import com.mrbysco.illegalbuilding.handler.RightClickHandler;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
-import com.mrbysco.illegalbuilding.registry.IllegalTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,9 +22,9 @@ public class IllegalBuilding {
 		IllegalRegistry.ENTITY_TYPES.register(eventBus);
 		IllegalRegistry.BLOCKS.register(eventBus);
 		IllegalRegistry.ITEMS.register(eventBus);
+		IllegalRegistry.CREATIVE_MODE_TABS.register(eventBus);
 
 		MinecraftForge.EVENT_BUS.register(new RightClickHandler());
-		eventBus.register(new IllegalTabs());
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			eventBus.addListener(ClientHandler::registerEntityRenders);

@@ -27,39 +27,37 @@ public class RightClickHandler {
 		if (state.getBlock() instanceof ImpossibleSandBlock) {
 			BlockHitResult hitVec = event.getHitVec();
 			BlockPos downPos = pos.below();
-			if (hitVec.getDirection() == Direction.DOWN) {
-				if (level.getBlockState(downPos).getMaterial().isReplaceable()) {
-					Player player = event.getEntity();
-					if (stack.getItem() == Items.SUGAR_CANE) {
-						BlockState sugarCane = IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get().defaultBlockState();
-						if (sugarCane.canSurvive(level, downPos)) {
-							level.setBlock(downPos, sugarCane, 11);
-							sugarCane.getBlock().setPlacedBy(level, downPos, sugarCane, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get()));
-							if (player instanceof ServerPlayer) {
-								CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, downPos, stack);
-							}
-							SoundType soundtype = sugarCane.getSoundType(level, pos, player);
-							level.playSound(player, downPos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+			if (hitVec.getDirection() == Direction.DOWN && level.getBlockState(downPos).canBeReplaced()) {
+				Player player = event.getEntity();
+				if (stack.getItem() == Items.SUGAR_CANE) {
+					BlockState sugarCane = IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get().defaultBlockState();
+					if (sugarCane.canSurvive(level, downPos)) {
+						level.setBlock(downPos, sugarCane, 11);
+						sugarCane.getBlock().setPlacedBy(level, downPos, sugarCane, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get()));
+						if (player instanceof ServerPlayer) {
+							CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, downPos, stack);
+						}
+						SoundType soundtype = sugarCane.getSoundType(level, pos, player);
+						level.playSound(player, downPos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
-							if (player == null || !player.getAbilities().instabuild) {
-								stack.shrink(1);
-							}
+						if (player == null || !player.getAbilities().instabuild) {
+							stack.shrink(1);
 						}
 					}
-					if (stack.getItem() == Items.CACTUS) {
-						BlockState cactusState = IllegalRegistry.IMPOSSIBLE_CACTUS.get().defaultBlockState();
-						if (cactusState.canSurvive(level, downPos)) {
-							level.setBlock(downPos, cactusState, 11);
-							cactusState.getBlock().setPlacedBy(level, downPos, cactusState, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_CACTUS.get()));
-							if (player instanceof ServerPlayer) {
-								CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, downPos, stack);
-							}
-							SoundType soundtype = cactusState.getSoundType(level, pos, player);
-							level.playSound(player, downPos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+				}
+				if (stack.getItem() == Items.CACTUS) {
+					BlockState cactusState = IllegalRegistry.IMPOSSIBLE_CACTUS.get().defaultBlockState();
+					if (cactusState.canSurvive(level, downPos)) {
+						level.setBlock(downPos, cactusState, 11);
+						cactusState.getBlock().setPlacedBy(level, downPos, cactusState, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_CACTUS.get()));
+						if (player instanceof ServerPlayer) {
+							CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, downPos, stack);
+						}
+						SoundType soundtype = cactusState.getSoundType(level, pos, player);
+						level.playSound(player, downPos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
-							if (player == null || !player.getAbilities().instabuild) {
-								stack.shrink(1);
-							}
+						if (player == null || !player.getAbilities().instabuild) {
+							stack.shrink(1);
 						}
 					}
 				}

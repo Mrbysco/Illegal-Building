@@ -21,20 +21,20 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-		if (worldIn.isEmptyBlock(pos.below())) {
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (level.isEmptyBlock(pos.below())) {
 			int i;
-			for (i = 1; worldIn.getBlockState(pos.above(i)).is(this); ++i) {
+			for (i = 1; level.getBlockState(pos.above(i)).is(this); ++i) {
 			}
 
 			if (i < 3) {
 				int j = state.getValue(AGE);
-				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
+				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, true)) {
 					if (j == 15) {
-						worldIn.setBlockAndUpdate(pos.below(), this.defaultBlockState());
-						worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(0)), 4);
+						level.setBlockAndUpdate(pos.below(), this.defaultBlockState());
+						level.setBlock(pos, state.setValue(AGE, Integer.valueOf(0)), 4);
 					} else {
-						worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
+						level.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
 				}
 			}
@@ -42,10 +42,10 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-		BlockState soil = worldIn.getBlockState(pos.above());
-		if (soil.canSustainPlant(worldIn, pos.above(), Direction.DOWN, this)) return true;
-		BlockState blockstate = worldIn.getBlockState(pos.above());
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		BlockState soil = level.getBlockState(pos.above());
+		if (soil.canSustainPlant(level, pos.above(), Direction.DOWN, this)) return true;
+		BlockState blockstate = level.getBlockState(pos.above());
 		if (blockstate.getBlock() == this) {
 			return true;
 		} else {
@@ -55,8 +55,8 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 				BlockPos blockpos = pos.above();
 
 				for (Direction direction : Direction.Plane.HORIZONTAL) {
-					BlockState blockstate1 = worldIn.getBlockState(blockpos.relative(direction));
-					FluidState fluidstate = worldIn.getFluidState(blockpos.relative(direction));
+					BlockState blockstate1 = level.getBlockState(blockpos.relative(direction));
+					FluidState fluidstate = level.getFluidState(blockpos.relative(direction));
 					if (fluidstate.is(FluidTags.WATER) || blockstate1.is(Blocks.FROSTED_ICE)) {
 						return true;
 					}

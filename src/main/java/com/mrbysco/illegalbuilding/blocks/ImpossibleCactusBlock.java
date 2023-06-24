@@ -9,7 +9,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.IPlantable;
 
 public class ImpossibleCactusBlock extends CactusBlock {
@@ -18,51 +17,51 @@ public class ImpossibleCactusBlock extends CactusBlock {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
-		if (!worldIn.isAreaLoaded(pos, 1))
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
+		if (!level.isAreaLoaded(pos, 1))
 			return; // Forge: prevent growing cactus from loading unloaded chunks with block update
-		if (!state.canSurvive(worldIn, pos)) {
-			worldIn.destroyBlock(pos, true);
+		if (!state.canSurvive(level, pos)) {
+			level.destroyBlock(pos, true);
 		}
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+	public void randomTick(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random) {
 		BlockPos blockpos = pos.below();
-		if (worldIn.isEmptyBlock(blockpos)) {
+		if (serverLevel.isEmptyBlock(blockpos)) {
 			int i;
-			for (i = 1; worldIn.getBlockState(pos.above(i)).is(this); ++i) {
+			for (i = 1; serverLevel.getBlockState(pos.above(i)).is(this); ++i) {
 			}
 
 			if (i < 3) {
 				int j = state.getValue(AGE);
-				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, blockpos, state, true)) {
+				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(serverLevel, blockpos, state, true)) {
 					if (j == 15) {
-						worldIn.setBlockAndUpdate(blockpos, this.defaultBlockState());
+						serverLevel.setBlockAndUpdate(blockpos, this.defaultBlockState());
 						BlockState blockstate = state.setValue(AGE, Integer.valueOf(0));
-						worldIn.setBlock(pos, blockstate, 4);
-						blockstate.neighborChanged(worldIn, blockpos, this, pos, false);
+						serverLevel.setBlock(pos, blockstate, 4);
+						blockstate.neighborChanged(serverLevel, blockpos, this, pos, false);
 					} else {
-						worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
+						serverLevel.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
-					net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+					net.minecraftforge.common.ForgeHooks.onCropsGrowPost(serverLevel, pos, state);
 				}
 			}
 		}
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		for (Direction direction : Direction.Plane.HORIZONTAL) {
-			BlockState blockstate = worldIn.getBlockState(pos.relative(direction));
-			Material material = blockstate.getMaterial();
-			if (material.isSolid() || worldIn.getFluidState(pos.relative(direction)).is(FluidTags.LAVA)) {
+			BlockState blockstate = level.getBlockState(pos.relative(direction));
+			if (blockstate.isSolid() || level.getFluidState(pos.relative(direction)).is(FluidTags.LAVA)) {
 				return false;
 			}
 		}
 
-		BlockState soil = worldIn.getBlockState(pos.above());
-		return soil.canSustainPlant(worldIn, pos, Direction.UP, this) && !worldIn.getBlockState(pos.above()).getMaterial().isLiquid();
+		BlockState soil = level.getBlockState(pos.above());
+		return soil.canSustainPlant(level, pos, Direction.UP, this) &&
+				!level.getBlockState(pos.above()).liquid();
 	}
 
 	@Override
