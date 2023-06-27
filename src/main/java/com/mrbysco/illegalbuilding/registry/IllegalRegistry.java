@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -63,6 +64,7 @@ public class IllegalRegistry {
 
 	public static final RegistryObject<CreativeModeTab> BOMB_TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
 			.icon(() -> new ItemStack(IllegalRegistry.OFFSET_STONE.get()))
+			.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 			.title(Component.translatable("itemGroup.illegalbuilding"))
 			.displayItems((displayParameters, output) -> {
 				List<ItemStack> stacks = IllegalRegistry.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
