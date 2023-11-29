@@ -9,7 +9,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.IPlantable;
+import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.CommonHooks;
 
 public class ImpossibleCactusBlock extends CactusBlock {
 	public ImpossibleCactusBlock(Properties builder) {
@@ -35,7 +36,7 @@ public class ImpossibleCactusBlock extends CactusBlock {
 
 			if (i < 3) {
 				int j = state.getValue(AGE);
-				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(serverLevel, blockpos, state, true)) {
+				if (CommonHooks.onCropsGrowPre(serverLevel, blockpos, state, true)) {
 					if (j == 15) {
 						serverLevel.setBlockAndUpdate(blockpos, this.defaultBlockState());
 						BlockState blockstate = state.setValue(AGE, Integer.valueOf(0));
@@ -44,7 +45,7 @@ public class ImpossibleCactusBlock extends CactusBlock {
 					} else {
 						serverLevel.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
-					net.minecraftforge.common.ForgeHooks.onCropsGrowPost(serverLevel, pos, state);
+					CommonHooks.onCropsGrowPost(serverLevel, pos, state);
 				}
 			}
 		}

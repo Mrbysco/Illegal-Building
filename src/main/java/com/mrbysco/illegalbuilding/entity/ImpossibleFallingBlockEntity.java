@@ -30,8 +30,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages.SpawnEntity;
+import net.neoforged.neoforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.PlayMessages;
 
 public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 	public boolean onRoof;
@@ -52,7 +52,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 		super(p_i50218_1_, world);
 	}
 
-	public ImpossibleFallingBlockEntity(SpawnEntity spawnEntity, Level level) {
+	public ImpossibleFallingBlockEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
 		this(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), level);
 	}
 
@@ -184,11 +184,11 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 			BlockPos blockpos = new BlockPos(x, y, z);
 			BlockState blockstate = this.level().getBlockState(blockpos);
 			if (blockstate.isAir()) {
-				BlockPos blockpos1 = blockpos.below();
-				BlockState blockstate1 = this.level().getBlockState(blockpos1);
-				if (blockstate1.is(BlockTags.FENCES) || blockstate1.is(BlockTags.WALLS) || blockstate1.is(BlockTags.FENCE_GATES)) {
-					blockstate = blockstate1;
-					blockpos = blockpos1;
+				BlockPos belowPos = blockpos.below();
+				BlockState belowState = this.level().getBlockState(belowPos);
+				if (belowState.is(BlockTags.FENCES) || belowState.is(BlockTags.WALLS) || belowState.is(BlockTags.FENCE_GATES)) {
+					blockstate = belowState;
+					blockpos = belowPos;
 				}
 			}
 

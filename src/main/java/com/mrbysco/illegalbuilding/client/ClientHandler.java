@@ -3,8 +3,8 @@ package com.mrbysco.illegalbuilding.client;
 import com.mrbysco.illegalbuilding.client.renderer.ImpossibleFallingBlockRenderer;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 public class ClientHandler {
 
