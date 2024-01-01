@@ -6,7 +6,6 @@ import com.mrbysco.illegalbuilding.handler.RightClickHandler;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
@@ -15,9 +14,7 @@ import org.slf4j.Logger;
 public class IllegalBuilding {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public IllegalBuilding() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+	public IllegalBuilding(IEventBus eventBus) {
 		IllegalRegistry.ENTITY_TYPES.register(eventBus);
 		IllegalRegistry.BLOCKS.register(eventBus);
 		IllegalRegistry.ITEMS.register(eventBus);

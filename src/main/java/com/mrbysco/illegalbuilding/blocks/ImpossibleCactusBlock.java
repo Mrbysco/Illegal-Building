@@ -66,11 +66,11 @@ public class ImpossibleCactusBlock extends CactusBlock {
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
-		BlockState plant = plantable.getPlant(world, pos.relative(facing));
+	public boolean canSustainPlant(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction facing, IPlantable plantable) {
+		BlockState plant = plantable.getPlant(blockGetter, pos.relative(facing));
 		if (plant.getBlock() == this)
 			return true;
 
-		return super.canSustainPlant(state, world, pos, facing, plantable);
+		return super.canSustainPlant(state, blockGetter, pos, facing, plantable);
 	}
 }

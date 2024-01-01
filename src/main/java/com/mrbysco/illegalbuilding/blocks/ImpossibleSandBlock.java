@@ -22,8 +22,8 @@ public class ImpossibleSandBlock extends ImpossibleFallingBlock {
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
-		BlockState plant = plantable.getPlant(world, pos.relative(facing));
+	public boolean canSustainPlant(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction facing, IPlantable plantable) {
+		BlockState plant = plantable.getPlant(blockGetter, pos.relative(facing));
 		return plant.getBlock() == IllegalRegistry.IMPOSSIBLE_CACTUS.get() || plant.getBlock() == IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get();
 	}
 }
