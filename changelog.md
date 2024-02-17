@@ -1,1 +1,1 @@
-* Initial update to 1.20.4
+* Update NeoForge support (Requires 20.4.70-beta or later)
