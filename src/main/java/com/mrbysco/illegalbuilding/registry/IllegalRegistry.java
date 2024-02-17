@@ -33,7 +33,7 @@ public class IllegalRegistry {
 	public static final Supplier<EntityType<ImpossibleFallingBlockEntity>> IMPOSSIBLE_FALLING_BLOCK = ENTITY_TYPES.register("impossible_falling_block",
 			() -> EntityType.Builder.<ImpossibleFallingBlockEntity>of(ImpossibleFallingBlockEntity::new, MobCategory.MISC)
 					.sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(20)
-					.setCustomClientFactory(ImpossibleFallingBlockEntity::new).build("impossible_falling_block"));
+					.build("impossible_falling_block"));
 
 	public static final DeferredBlock<OffsetBlock> OFFSET_STONE = BLOCKS.register("offset_stone", () -> new OffsetBlock(Block.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F).noOcclusion().isRedstoneConductor(OffsetBlock::isntSolid)));
 
