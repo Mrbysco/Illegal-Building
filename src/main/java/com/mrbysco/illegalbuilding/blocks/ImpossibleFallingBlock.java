@@ -26,7 +26,7 @@ public class ImpossibleFallingBlock extends FallingBlock {
 	public ImpossibleFallingBlock(Block.Properties builder) {
 		super(builder);
 	}
-	
+
 	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
 		if (level.isEmptyBlock(pos.above()) || isFree(level.getBlockState(pos.above())) && pos.getY() <= 256) {

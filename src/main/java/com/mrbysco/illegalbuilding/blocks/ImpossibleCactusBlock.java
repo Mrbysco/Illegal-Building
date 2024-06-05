@@ -9,8 +9,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.IPlantable;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.IPlantable;
 
 public class ImpossibleCactusBlock extends CactusBlock {
 	public ImpossibleCactusBlock(Properties builder) {
@@ -36,16 +36,17 @@ public class ImpossibleCactusBlock extends CactusBlock {
 
 			if (i < 3) {
 				int j = state.getValue(AGE);
-				if (CommonHooks.onCropsGrowPre(serverLevel, blockpos, state, true)) {
+				if (CommonHooks.canCropGrow(serverLevel, blockpos, state, true)) {
 					if (j == 15) {
 						serverLevel.setBlockAndUpdate(blockpos, this.defaultBlockState());
 						BlockState blockstate = state.setValue(AGE, Integer.valueOf(0));
 						serverLevel.setBlock(pos, blockstate, 4);
-						blockstate.neighborChanged(serverLevel, blockpos, this, pos, false);
+						serverLevel.neighborChanged(blockstate, blockpos, this, pos, false);
+
 					} else {
 						serverLevel.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
-					CommonHooks.onCropsGrowPost(serverLevel, pos, state);
+					net.neoforged.neoforge.common.CommonHooks.fireCropGrowPost(serverLevel, pos, state);
 				}
 			}
 		}

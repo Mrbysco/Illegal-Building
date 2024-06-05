@@ -51,6 +51,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 	/**
 	 * Called to update the entity's position/logic.
 	 */
+	@Override
 	public void tick() {
 		if (this.blockState.isAir()) {
 			this.discard();
@@ -117,7 +118,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 									if (this.blockData != null && this.blockState.hasBlockEntity()) {
 										BlockEntity blockEntity = this.level().getBlockEntity(pos);
 										if (blockEntity != null) {
-											CompoundTag compoundTag = blockEntity.saveWithoutMetadata();
+											CompoundTag compoundTag = blockEntity.saveWithoutMetadata(this.registryAccess());
 
 											for (String s : this.blockData.getAllKeys()) {
 												Tag tag = this.blockData.get(s);
@@ -127,7 +128,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 											}
 
 											try {
-												blockEntity.load(compoundTag);
+												blockEntity.loadWithComponents(compoundTag, this.registryAccess());
 											} catch (Exception var16) {
 												IllegalBuilding.LOGGER.error("Failed to load block entity from impossible falling block", var16);
 											}

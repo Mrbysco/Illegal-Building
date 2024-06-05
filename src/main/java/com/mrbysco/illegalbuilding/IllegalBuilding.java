@@ -4,9 +4,9 @@ import com.mojang.logging.LogUtils;
 import com.mrbysco.illegalbuilding.client.ClientHandler;
 import com.mrbysco.illegalbuilding.handler.RightClickHandler;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 public class IllegalBuilding {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public IllegalBuilding(IEventBus eventBus) {
+	public IllegalBuilding(IEventBus eventBus, Dist dist) {
 		IllegalRegistry.ENTITY_TYPES.register(eventBus);
 		IllegalRegistry.BLOCKS.register(eventBus);
 		IllegalRegistry.ITEMS.register(eventBus);
@@ -22,7 +22,7 @@ public class IllegalBuilding {
 
 		NeoForge.EVENT_BUS.register(new RightClickHandler());
 
-		if (FMLEnvironment.dist.isClient()) {
+		if (dist.isClient()) {
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerBlockColors);
 		}

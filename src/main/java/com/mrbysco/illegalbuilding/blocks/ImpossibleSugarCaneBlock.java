@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.neoforged.neoforge.common.IPlantable;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.IPlantable;
 
 public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 	public ImpossibleSugarCaneBlock(Block.Properties builder) {
@@ -30,9 +30,10 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 
 			if (i < 3) {
 				int j = state.getValue(AGE);
-				if (CommonHooks.onCropsGrowPre(level, pos, state, true)) {
+				if (CommonHooks.canCropGrow(level, pos, state, true)) {
 					if (j == 15) {
 						level.setBlockAndUpdate(pos.below(), this.defaultBlockState());
+						net.neoforged.neoforge.common.CommonHooks.fireCropGrowPost(level, pos, this.defaultBlockState());
 						level.setBlock(pos, state.setValue(AGE, Integer.valueOf(0)), 4);
 					} else {
 						level.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);

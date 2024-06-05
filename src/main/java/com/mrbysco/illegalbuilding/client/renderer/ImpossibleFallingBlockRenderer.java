@@ -25,6 +25,7 @@ public class ImpossibleFallingBlockRenderer extends EntityRenderer<ImpossibleFal
 		this.dispatcher = context.getBlockRenderDispatcher();
 	}
 
+	@Override
 	public void render(ImpossibleFallingBlockEntity impossibleFallingBlockEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
 		BlockState blockstate = impossibleFallingBlockEntity.getBlockState();
 		if (blockstate.getRenderShape() == RenderShape.MODEL) {
@@ -45,6 +46,7 @@ public class ImpossibleFallingBlockRenderer extends EntityRenderer<ImpossibleFal
 	/**
 	 * Returns the location of an entity's texture.
 	 */
+	@Override
 	public ResourceLocation getTextureLocation(ImpossibleFallingBlockEntity entity) {
 		return InventoryMenu.BLOCK_ATLAS;
 	}
