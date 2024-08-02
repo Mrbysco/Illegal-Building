@@ -14,8 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import java.util.Random;
-
 public class ImpossibleFallingBlock extends FallingBlock {
 	public static final MapCodec<ImpossibleFallingBlock> CODEC = simpleCodec(ImpossibleFallingBlock::new);
 
@@ -46,14 +44,15 @@ public class ImpossibleFallingBlock extends FallingBlock {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, Level level, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
 		if (rand.nextInt(16) == 0) {
 			BlockPos blockpos = pos.above();
 			if (level.isEmptyBlock(blockpos) || isFree(level.getBlockState(blockpos))) {
 				double d0 = (double) pos.getX() + rand.nextDouble();
 				double d1 = (double) pos.getY() - 0.05D;
 				double d2 = (double) pos.getZ() + rand.nextDouble();
-				level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, stateIn), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+				level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, state), d0, d1, d2,
+						0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

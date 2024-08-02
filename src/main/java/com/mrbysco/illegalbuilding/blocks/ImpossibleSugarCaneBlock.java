@@ -1,6 +1,5 @@
 package com.mrbysco.illegalbuilding.blocks;
 
-import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.util.TriState;
 
 public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 	public ImpossibleSugarCaneBlock(Block.Properties builder) {
@@ -45,15 +44,11 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-		BlockState soil = level.getBlockState(pos.above());
-		if (soil.canSustainPlant(level, pos.above(), Direction.DOWN, this)) return true;
 		BlockState blockstate = level.getBlockState(pos.above());
 		if (blockstate.getBlock() == this) {
 			return true;
 		} else {
-			if (blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(Blocks.DIRT) || blockstate.is(Blocks.COARSE_DIRT) ||
-					blockstate.is(Blocks.PODZOL) || blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_SAND.get() ||
-					blockstate.getBlock() == IllegalRegistry.IMPOSSIBLE_RED_SAND.get()) {
+			if (blockstate.canSustainPlant(level, pos, Direction.UP, state).isTrue()) {
 				BlockPos blockpos = pos.above();
 
 				for (Direction direction : Direction.Plane.HORIZONTAL) {
@@ -70,11 +65,9 @@ public class ImpossibleSugarCaneBlock extends SugarCaneBlock {
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction facing, IPlantable plantable) {
-		BlockState plant = plantable.getPlant(blockGetter, pos.relative(facing));
+	public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
 		if (plant.getBlock() == this)
-			return true;
-
-		return super.canSustainPlant(state, blockGetter, pos, facing, plantable);
+			return TriState.TRUE;
+		return super.canSustainPlant(state, level, soilPosition, facing, plant);
 	}
 }

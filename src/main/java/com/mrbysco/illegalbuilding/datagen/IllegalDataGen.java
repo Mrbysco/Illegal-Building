@@ -43,8 +43,8 @@ public class IllegalDataGen {
 
 		private static class IllegalBlocks extends BlockLootSubProvider {
 
-			protected IllegalBlocks() {
-				super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+			protected IllegalBlocks(HolderLookup.Provider provider) {
+				super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
 			}
 
 			@Override

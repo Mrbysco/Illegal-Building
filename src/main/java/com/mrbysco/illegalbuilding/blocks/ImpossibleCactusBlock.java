@@ -10,7 +10,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.util.TriState;
 
 public class ImpossibleCactusBlock extends CactusBlock {
 	public ImpossibleCactusBlock(Properties builder) {
@@ -62,16 +62,15 @@ public class ImpossibleCactusBlock extends CactusBlock {
 		}
 
 		BlockState soil = level.getBlockState(pos.above());
-		return soil.canSustainPlant(level, pos, Direction.UP, this) &&
+		return soil.canSustainPlant(level, pos, Direction.UP, state).isTrue() &&
 				!level.getBlockState(pos.above()).liquid();
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction facing, IPlantable plantable) {
-		BlockState plant = plantable.getPlant(blockGetter, pos.relative(facing));
+	public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
 		if (plant.getBlock() == this)
-			return true;
+			return TriState.TRUE;
 
-		return super.canSustainPlant(state, blockGetter, pos, facing, plantable);
+		return super.canSustainPlant(state, level, soilPosition, facing, plant);
 	}
 }

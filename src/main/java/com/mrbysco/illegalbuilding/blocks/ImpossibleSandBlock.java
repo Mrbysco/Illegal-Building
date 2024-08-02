@@ -6,7 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.util.TriState;
 
 public class ImpossibleSandBlock extends ImpossibleFallingBlock {
 	private final int dustColor;
@@ -22,8 +22,11 @@ public class ImpossibleSandBlock extends ImpossibleFallingBlock {
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction facing, IPlantable plantable) {
-		BlockState plant = plantable.getPlant(blockGetter, pos.relative(facing));
-		return plant.getBlock() == IllegalRegistry.IMPOSSIBLE_CACTUS.get() || plant.getBlock() == IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get();
+	public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+		if (plant.getBlock() == IllegalRegistry.IMPOSSIBLE_CACTUS.get() ||
+				plant.getBlock() == IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get()) {
+			return TriState.TRUE;
+		}
+		return super.canSustainPlant(state, level, soilPosition, facing, plant);
 	}
 }
