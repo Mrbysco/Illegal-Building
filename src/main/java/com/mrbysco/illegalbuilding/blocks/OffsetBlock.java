@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,7 +24,7 @@ public class OffsetBlock extends DirectionalBlock {
 	protected static final VoxelShape OFFSET_SOUTH_AABB = createBox(0.0D, 0.0D, 8D, 16.0D, 16.0D, 24.0D);
 	protected static final VoxelShape OFFSET_WEST_AABB = createBox(-8.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 	protected static final VoxelShape OFFSET_EAST_AABB = createBox(8.0D, 0.0D, 0.0D, 24.0D, 16.0D, 16.0D);
-	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+	public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
 	/**
 	 * Required as Shapes.box() doesn't allow the values I gave it :)
@@ -80,7 +80,7 @@ public class OffsetBlock extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+	protected boolean propagatesSkylightDown(BlockState state) {
 		return true;
 	}
 }

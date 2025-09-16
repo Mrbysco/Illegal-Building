@@ -7,8 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ConcretePowderBlock;
+import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -48,6 +49,14 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 		super(entityType, level);
 	}
 
+	@Override
+	protected void applyGravity() {
+		double gravity = this.getGravity();
+		if (gravity != 0.0) {
+			this.setDeltaMovement(this.getDeltaMovement().add(0.0, gravity, 0.0));
+		}
+	}
+
 	/**
 	 * Called to update the entity's position/logic.
 	 */
@@ -57,38 +66,33 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 			this.discard();
 		} else {
 			Block block = this.blockState.getBlock();
-			if (this.time++ == 0) {
-				BlockPos blockpos = this.blockPosition();
-				if (this.level().getBlockState(blockpos).is(block)) {
-					this.level().removeBlock(blockpos, false);
-				} else if (!this.level().isClientSide) {
-					this.discard();
-					return;
-				}
-			}
-
-			if (!this.isNoGravity()) {
-				this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
-			}
-
+			this.time++;
+			this.applyGravity();
 			this.move(MoverType.SELF, this.getDeltaMovement());
-			if (!this.level().isClientSide) {
+			this.applyEffectsFromBlocks();
+			this.handlePortal();
+			if (this.level() instanceof ServerLevel serverlevel && (this.isAlive() || this.forceTickAfterTeleportToDuplicate)) {
 				BlockPos pos = this.blockPosition();
 				boolean flag = this.blockState.getBlock() instanceof ConcretePowderBlock;
-				boolean flag1 = flag && this.level().getFluidState(pos).is(FluidTags.WATER);
+				boolean flag1 = flag && this.blockState.canBeHydrated(this.level(), pos, this.level().getFluidState(pos), pos);
 				double d0 = this.getDeltaMovement().lengthSqr();
-				if (flag && d0 > 1.0D) {
-					BlockHitResult blockHitResult = this.level().clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
-					if (blockHitResult.getType() != HitResult.Type.MISS && this.level().getFluidState(blockHitResult.getBlockPos()).is(FluidTags.WATER)) {
-						pos = blockHitResult.getBlockPos();
+				if (flag && d0 > 1.0) {
+					BlockHitResult blockhitresult = this.level()
+							.clip(
+									new ClipContext(
+											new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this
+									)
+							);
+					if (blockhitresult.getType() != HitResult.Type.MISS && this.blockState.canBeHydrated(this.level(), pos, this.level().getFluidState(blockhitresult.getBlockPos()), blockhitresult.getBlockPos())) {
+						pos = blockhitresult.getBlockPos();
 						flag1 = true;
 					}
 				}
 
 				if (!this.onRoof && !flag1) {
-					if (!this.level().isClientSide && (this.time > 100 && (pos.getY() < 1 || pos.getY() > 256) || this.time > 600)) {
-						if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-							this.spawnAtLocation(block);
+					if (this.time > 100 && (pos.getY() <= this.level().getMinY() || pos.getY() > this.level().getMaxY()) || this.time > 600) {
+						if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+							this.spawnAtLocation(serverlevel, block);
 						}
 
 						this.discard();
@@ -111,8 +115,8 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 								}
 
 								if (this.level().setBlock(pos, this.blockState, 3)) {
-									if (block instanceof ImpossibleFallingBlock) {
-										((ImpossibleFallingBlock) block).onEndFalling(this.level(), pos, this.blockState, blockstate, this);
+									if (block instanceof Fallable) {
+										((Fallable) block).onLand(this.level(), pos, this.blockState, blockstate, this);
 									}
 
 									if (this.blockData != null && this.blockState.hasBlockEntity()) {
@@ -136,20 +140,21 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 											blockEntity.setChanged();
 										}
 									}
-								} else if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+								} else if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 									this.discard();
 									this.callOnBrokenAfterFall(block, pos);
-									this.spawnAtLocation(block);
+									this.spawnAtLocation(serverlevel, block);
 								}
-							} else if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+							} else {
 								this.discard();
-								this.callOnBrokenAfterFall(block, pos);
-								this.spawnAtLocation(block);
+								if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+									this.callOnBrokenAfterFall(block, pos);
+									this.spawnAtLocation(serverlevel, block);
+								}
 							}
-						} else if (block instanceof ImpossibleFallingBlock) {
+						} else {
 							this.discard();
 							this.callOnBrokenAfterFall(block, pos);
-							((ImpossibleFallingBlock) block).onBroken(this.level(), pos, this);
 						}
 					}
 				}

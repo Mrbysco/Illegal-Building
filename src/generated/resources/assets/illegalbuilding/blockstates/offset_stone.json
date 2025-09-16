@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "illegalbuilding:block/offset_stone",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "illegalbuilding:block/offset_stone"
+    },
+    "facing=south": {
+      "model": "illegalbuilding:block/offset_stone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "illegalbuilding:block/offset_stone",
+      "y": 270
+    }
+  }
+}

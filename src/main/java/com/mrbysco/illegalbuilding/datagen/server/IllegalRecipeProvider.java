@@ -6,8 +6,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -15,12 +13,12 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.concurrent.CompletableFuture;
 
 public class IllegalRecipeProvider extends RecipeProvider {
-	public IllegalRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-		super(output, registries);
+	public IllegalRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+		super(provider, recipeOutput);
 	}
 
 	@Override
-	protected void buildRecipes(RecipeOutput output) {
+	protected void buildRecipes() {
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_OAK_LOG_ITEM, Items.OAK_LOG);
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_SPRUCE_LOG_ITEM, Items.SPRUCE_LOG);
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_BIRCH_LOG_ITEM, Items.BIRCH_LOG);
@@ -28,16 +26,16 @@ public class IllegalRecipeProvider extends RecipeProvider {
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_ACACIA_LOG_ITEM, Items.ACACIA_LOG);
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG_ITEM, Items.DARK_OAK_LOG);
 
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, IllegalRegistry.IMPOSSIBLE_SAND_ITEM.get())
+		shapeless(RecipeCategory.MISC, IllegalRegistry.IMPOSSIBLE_SAND_ITEM.get())
 				.requires(Items.SAND)
 				.unlockedBy("has_item", has(Items.SAND))
 				.save(output);
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, IllegalRegistry.IMPOSSIBLE_RED_SAND_ITEM.get())
+		shapeless(RecipeCategory.MISC, IllegalRegistry.IMPOSSIBLE_RED_SAND_ITEM.get())
 				.requires(Items.RED_SAND)
 				.unlockedBy("has_item", has(Items.RED_SAND))
 				.save(output);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, IllegalRegistry.OFFSET_STONE.asItem(), 9)
+		shaped(RecipeCategory.BUILDING_BLOCKS, IllegalRegistry.OFFSET_STONE.asItem(), 9)
 				.pattern("###")
 				.pattern("###")
 				.pattern("###")
@@ -47,11 +45,27 @@ public class IllegalRecipeProvider extends RecipeProvider {
 	}
 
 	private void createLogRecipe(RecipeOutput output, DeferredItem<?> logItem, ItemLike log) {
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, logItem.asItem(), 4)
+		shaped(RecipeCategory.BUILDING_BLOCKS, logItem.asItem(), 4)
 				.pattern("##")
 				.pattern("##")
 				.define('#', log)
 				.unlockedBy("has_item", has(log))
 				.save(output);
+	}
+
+	public static class Runner extends RecipeProvider.Runner {
+		public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+			super(output, completableFuture);
+		}
+
+		@Override
+		protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+			return new IllegalRecipeProvider(provider, recipeOutput);
+		}
+
+		@Override
+		public String getName() {
+			return "Illegal Building Recipes";
+		}
 	}
 }

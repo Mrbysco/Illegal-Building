@@ -28,12 +28,17 @@ public class IllegalRegistry {
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Reference.MOD_ID);
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Reference.MOD_ID);
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, Reference.MOD_ID);
+	public static final DeferredRegister.Entities ENTITY_TYPES = DeferredRegister.createEntities(Reference.MOD_ID);
 
-	public static final Supplier<EntityType<ImpossibleFallingBlockEntity>> IMPOSSIBLE_FALLING_BLOCK = ENTITY_TYPES.register("impossible_falling_block",
-			() -> EntityType.Builder.<ImpossibleFallingBlockEntity>of(ImpossibleFallingBlockEntity::new, MobCategory.MISC)
-					.sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(20)
-					.build("impossible_falling_block"));
+	public static final Supplier<EntityType<ImpossibleFallingBlockEntity>> IMPOSSIBLE_FALLING_BLOCK = ENTITY_TYPES.registerEntityType("impossible_falling_block",
+			ImpossibleFallingBlockEntity::new,
+			MobCategory.MISC,
+			builder -> builder
+					.noLootTable()
+					.sized(0.98F, 0.98F)
+					.clientTrackingRange(10)
+					.updateInterval(20)
+	);
 
 	public static final DeferredBlock<OffsetBlock> OFFSET_STONE = BLOCKS.registerBlock("offset_stone", OffsetBlock::new, Block.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F).noOcclusion().isRedstoneConductor(OffsetBlock::isntSolid));
 

@@ -41,8 +41,7 @@ public class ImpossibleCactusBlock extends CactusBlock {
 						serverLevel.setBlockAndUpdate(blockpos, this.defaultBlockState());
 						BlockState blockstate = state.setValue(AGE, Integer.valueOf(0));
 						serverLevel.setBlock(pos, blockstate, 4);
-						serverLevel.neighborChanged(blockstate, blockpos, this, pos, false);
-
+						serverLevel.neighborChanged(blockstate, blockpos, this, null, false);
 					} else {
 						serverLevel.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
