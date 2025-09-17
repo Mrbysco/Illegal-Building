@@ -3,22 +3,24 @@ package com.mrbysco.illegalbuilding.blocks;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.ColorRGBA;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.TriState;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.sounds.AmbientDesertBlockSoundsPlayer;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.TriState;
 
-public class ImpossibleSandBlock extends ImpossibleFallingBlock {
-	private final int dustColor;
+public class ImpossibleSandBlock extends ImpossibleColoredFallingBlock {
 
-	public ImpossibleSandBlock(int color, Block.Properties properties) {
-		super(properties);
-		this.dustColor = color;
+	public ImpossibleSandBlock(ColorRGBA color, Block.Properties properties) {
+		super(color, properties);
 	}
 
 	@Override
-	public int getDustColor(BlockState state, BlockGetter getter, BlockPos pos) {
-		return this.dustColor;
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
+		AmbientDesertBlockSoundsPlayer.playAmbientBlockSounds(state, level, pos, rand);
 	}
 
 	@Override

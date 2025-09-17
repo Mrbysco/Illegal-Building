@@ -1,7 +1,7 @@
 package com.mrbysco.illegalbuilding.entity;
 
 import com.mrbysco.illegalbuilding.IllegalBuilding;
-import com.mrbysco.illegalbuilding.blocks.ImpossibleFallingBlock;
+import com.mrbysco.illegalbuilding.blocks.ImpossibleColoredFallingBlock;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,6 +47,19 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 
 	public ImpossibleFallingBlockEntity(EntityType<? extends FallingBlockEntity> entityType, Level level) {
 		super(entityType, level);
+	}
+
+	public static ImpossibleFallingBlockEntity fall(Level level, BlockPos pos, BlockState blockState) {
+		ImpossibleFallingBlockEntity impossibleFallingBlockEntity = new ImpossibleFallingBlockEntity(
+				level,
+				pos.getX() + 0.5,
+				pos.getY(),
+				pos.getZ() + 0.5,
+				blockState.hasProperty(BlockStateProperties.WATERLOGGED) ? blockState.setValue(BlockStateProperties.WATERLOGGED, false) : blockState
+		);
+		level.setBlock(pos, blockState.getFluidState().createLegacyBlock(), 3);
+		level.addFreshEntity(impossibleFallingBlockEntity);
+		return impossibleFallingBlockEntity;
 	}
 
 	@Override
@@ -104,7 +117,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 						this.discard();
 						if (!this.cancelDrop) {
 							boolean flag2 = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level(), pos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-							boolean flag3 = ImpossibleFallingBlock.isFree(this.level().getBlockState(pos.above())) && (!flag || !flag1);
+							boolean flag3 = ImpossibleColoredFallingBlock.isFree(this.level().getBlockState(pos.above())) && (!flag || !flag1);
 							if (flag3) {
 								this.onRoof = false;
 							}
@@ -124,7 +137,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 										if (blockEntity != null) {
 											CompoundTag compoundTag = blockEntity.saveWithoutMetadata(this.registryAccess());
 
-											for (String s : this.blockData.getAllKeys()) {
+											for (String s : this.blockData.keySet()) {
 												Tag tag = this.blockData.get(s);
 												if (!"x".equals(s) && !"y".equals(s) && !"z".equals(s)) {
 													compoundTag.put(s, tag.copy());
@@ -199,6 +212,6 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
-		this.onRoof = compound.getBoolean("OnRoof");
+		this.onRoof = compound.getBooleanOr("OnRoof", false);
 	}
 }

@@ -8,6 +8,7 @@ import com.mrbysco.illegalbuilding.blocks.OffsetBlock;
 import com.mrbysco.illegalbuilding.entity.ImpossibleFallingBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
@@ -49,8 +50,8 @@ public class IllegalRegistry {
 	public static final DeferredBlock<Block> IMPOSSIBLE_ACACIA_LOG = BLOCKS.registerSimpleBlock("impossible_acacia_log", Block.Properties.ofFullCopy(Blocks.ACACIA_PLANKS).strength(2.0F, 3.0F));
 	public static final DeferredBlock<Block> IMPOSSIBLE_DARK_OAK_LOG = BLOCKS.registerSimpleBlock("impossible_dark_oak_log", Block.Properties.ofFullCopy(Blocks.DARK_OAK_PLANKS).strength(2.0F, 3.0F));
 
-	public static final DeferredBlock<ImpossibleSandBlock> IMPOSSIBLE_SAND = BLOCKS.registerBlock("impossible_sand", (properties) -> new ImpossibleSandBlock(14406560, properties), Block.Properties.ofFullCopy(Blocks.SAND).strength(0.5F).sound(SoundType.SAND));
-	public static final DeferredBlock<ImpossibleSandBlock> IMPOSSIBLE_RED_SAND = BLOCKS.registerBlock("impossible_red_sand", (properties) -> new ImpossibleSandBlock(11098145, properties), Block.Properties.ofFullCopy(Blocks.RED_SAND).strength(0.5F).sound(SoundType.SAND));
+	public static final DeferredBlock<ImpossibleSandBlock> IMPOSSIBLE_SAND = BLOCKS.registerBlock("impossible_sand", (properties) -> new ImpossibleSandBlock(new ColorRGBA(14406560), properties), Block.Properties.ofFullCopy(Blocks.SAND).strength(0.5F).sound(SoundType.SAND));
+	public static final DeferredBlock<ImpossibleSandBlock> IMPOSSIBLE_RED_SAND = BLOCKS.registerBlock("impossible_red_sand", (properties) -> new ImpossibleSandBlock(new ColorRGBA(11098145), properties), Block.Properties.ofFullCopy(Blocks.RED_SAND).strength(0.5F).sound(SoundType.SAND));
 
 	public static final DeferredBlock<ImpossibleSugarCaneBlock> IMPOSSIBLE_SUGAR_CANE = BLOCKS.registerBlock("impossible_sugar_cane", ImpossibleSugarCaneBlock::new, Block.Properties.ofFullCopy(Blocks.SUGAR_CANE).noCollission().randomTicks().instabreak().sound(SoundType.GRASS));
 	public static final DeferredBlock<ImpossibleCactusBlock> IMPOSSIBLE_CACTUS = BLOCKS.registerBlock("impossible_cactus", ImpossibleCactusBlock::new, Block.Properties.ofFullCopy(Blocks.CACTUS).randomTicks().strength(0.4F).sound(SoundType.WOOL));

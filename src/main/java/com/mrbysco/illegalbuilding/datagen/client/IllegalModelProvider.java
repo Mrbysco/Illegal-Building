@@ -6,8 +6,6 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -59,14 +57,14 @@ public class IllegalModelProvider extends ModelProvider {
 	private void createLog(BlockModelGenerators blockModels, Block block, ResourceLocation texture) {
 		TextureMapping texturemapping = TextureMapping.cube(texture);
 		ResourceLocation model = ModelTemplates.CUBE_ALL.create(block, texturemapping, blockModels.modelOutput);
-		MultiVariantGenerator multiVariant = MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model));
+		MultiVariantGenerator multiVariant = MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model));
 
 		blockModels.blockStateOutput
 				.accept(multiVariant);
 	}
 
 	private void createExisting(BlockModelGenerators blockModels, Block block, ResourceLocation model) {
-		MultiVariantGenerator multiVariant = MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model));
+		MultiVariantGenerator multiVariant = MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model));
 
 		blockModels.blockStateOutput
 				.accept(multiVariant);
@@ -75,17 +73,17 @@ public class IllegalModelProvider extends ModelProvider {
 	private void createAll(BlockModelGenerators blockModels, Block block, Block textureBlock) {
 		TextureMapping texturemapping = TextureMapping.cube(textureBlock);
 		ResourceLocation model = ModelTemplates.CUBE_ALL.create(block, texturemapping, blockModels.modelOutput);
-		MultiVariantGenerator multiVariant = MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model));
+		MultiVariantGenerator multiVariant = MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model));
 
 		blockModels.blockStateOutput
 				.accept(multiVariant);
 	}
 
-	private void createOffset(BlockModelGenerators blockModels, Block offsetBlock, Block textureBlock) {
+	private void createOffset(BlockModelGenerators blockModels, Block block, Block textureBlock) {
 		TextureMapping texturemapping = TextureMapping.cube(textureBlock);
-		ResourceLocation model = OFFSET_CUBE_ALL.create(offsetBlock, texturemapping, blockModels.modelOutput);
-		MultiVariantGenerator multiVariant = MultiVariantGenerator.multiVariant(offsetBlock, Variant.variant().with(VariantProperties.MODEL, model))
-				.with(BlockModelGenerators.createHorizontalFacingDispatch());
+		ResourceLocation model = OFFSET_CUBE_ALL.create(block, texturemapping, blockModels.modelOutput);
+		MultiVariantGenerator multiVariant = MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model))
+				.with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING);
 
 		blockModels.blockStateOutput
 				.accept(multiVariant);
@@ -94,7 +92,7 @@ public class IllegalModelProvider extends ModelProvider {
 	private void createUpsideDownCross(BlockModelGenerators blockModels, Block block, Block textureBlock) {
 		TextureMapping texturemapping = TextureMapping.cross(textureBlock);
 		ResourceLocation model = UPSIDEDOWN_CROSS.create(block, texturemapping, blockModels.modelOutput);
-		MultiVariantGenerator multiVariant = MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model));
+		MultiVariantGenerator multiVariant = MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model));
 
 		blockModels.blockStateOutput
 				.accept(multiVariant);
