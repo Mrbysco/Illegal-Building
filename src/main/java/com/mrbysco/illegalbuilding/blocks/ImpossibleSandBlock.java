@@ -20,7 +20,7 @@ public class ImpossibleSandBlock extends ImpossibleColoredFallingBlock {
 
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-		AmbientDesertBlockSoundsPlayer.playAmbientBlockSounds(state, level, pos, rand);
+		AmbientDesertBlockSoundsPlayer.playAmbientSandSounds(level, pos, rand);
 	}
 
 	@Override

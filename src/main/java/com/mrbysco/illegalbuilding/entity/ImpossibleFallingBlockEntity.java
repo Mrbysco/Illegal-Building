@@ -5,11 +5,12 @@ import com.mrbysco.illegalbuilding.blocks.ImpossibleColoredFallingBlock;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -26,6 +27,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -133,24 +138,26 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 									}
 
 									if (this.blockData != null && this.blockState.hasBlockEntity()) {
-										BlockEntity blockEntity = this.level().getBlockEntity(pos);
-										if (blockEntity != null) {
-											CompoundTag compoundTag = blockEntity.saveWithoutMetadata(this.registryAccess());
-
-											for (String s : this.blockData.keySet()) {
-												Tag tag = this.blockData.get(s);
-												if (!"x".equals(s) && !"y".equals(s) && !"z".equals(s)) {
-													compoundTag.put(s, tag.copy());
-												}
+										BlockEntity blockentity = this.level().getBlockEntity(pos);
+										if (blockentity != null) {
+											try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(
+													blockentity.problemPath(), IllegalBuilding.LOGGER
+											)) {
+												RegistryAccess registryaccess = this.level().registryAccess();
+												TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(
+														problemreporter$scopedcollector, registryaccess
+												);
+												blockentity.saveWithoutMetadata(tagvalueoutput);
+												CompoundTag compoundtag = tagvalueoutput.buildResult();
+												this.blockData.forEach((p_409356_, p_409357_) -> compoundtag.put(p_409356_, p_409357_.copy()));
+												blockentity.loadWithComponents(
+														TagValueInput.create(problemreporter$scopedcollector, registryaccess, compoundtag)
+												);
+											} catch (Exception exception) {
+												IllegalBuilding.LOGGER.error("Failed to load block entity from impossible falling block", (Throwable) exception);
 											}
 
-											try {
-												blockEntity.loadWithComponents(compoundTag, this.registryAccess());
-											} catch (Exception var16) {
-												IllegalBuilding.LOGGER.error("Failed to load block entity from impossible falling block", var16);
-											}
-
-											blockEntity.setChanged();
+											blockentity.setChanged();
 										}
 									}
 								} else if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
@@ -203,15 +210,14 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 	}
 
 	@Override
-	public CompoundTag saveWithoutId(CompoundTag compound) {
-		compound = super.saveWithoutId(compound);
-		compound.putBoolean("OnRoof", this.onRoof);
-		return compound;
+	public void saveWithoutId(ValueOutput output) {
+		super.saveWithoutId(output);
+		output.putBoolean("OnRoof", this.onRoof);
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		this.onRoof = compound.getBooleanOr("OnRoof", false);
+	public void load(ValueInput input) {
+		super.load(input);
+		this.onRoof = input.getBooleanOr("OnRoof", false);
 	}
 }

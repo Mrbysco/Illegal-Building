@@ -14,7 +14,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class IllegalDataGen {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
@@ -25,9 +25,8 @@ public class IllegalDataGen {
 		generator.addProvider(true, new IllegalRecipeProvider.Runner(packOutput, lookupProvider));
 		generator.addProvider(true, new IllegalLootProvider(packOutput, lookupProvider));
 
-		IllegalBlockTagProvider blockTags = new IllegalBlockTagProvider(packOutput, lookupProvider);
-		generator.addProvider(true, blockTags);
-		generator.addProvider(true, new IllegalItemTagProvider(packOutput, lookupProvider, blockTags));
+		generator.addProvider(true, new IllegalBlockTagProvider(packOutput, lookupProvider));
+		generator.addProvider(true, new IllegalItemTagProvider(packOutput, lookupProvider));
 
 		generator.addProvider(true, new IllegalModelProvider(packOutput));
 	}

@@ -4,17 +4,14 @@ import com.mrbysco.illegalbuilding.Reference;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
 public class IllegalItemTagProvider extends ItemTagsProvider {
 
-	public IllegalItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
-	                              TagsProvider<Block> blockTagProvider) {
-		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID);
+	public IllegalItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+		super(output, lookupProvider, Reference.MOD_ID);
 	}
 
 	@Override
