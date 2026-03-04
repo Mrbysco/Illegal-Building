@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -32,7 +33,7 @@ public class RightClickHandler {
 				if (stack.getItem() == Items.SUGAR_CANE) {
 					BlockState sugarCane = IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get().defaultBlockState();
 					if (sugarCane.canSurvive(level, downPos)) {
-						level.setBlock(downPos, sugarCane, 11);
+						level.setBlock(downPos, sugarCane, Block.UPDATE_ALL_IMMEDIATE);
 						sugarCane.getBlock().setPlacedBy(level, downPos, sugarCane, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get()));
 						if (player instanceof ServerPlayer) {
 							CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, downPos, stack);
@@ -48,7 +49,7 @@ public class RightClickHandler {
 				if (stack.getItem() == Items.CACTUS) {
 					BlockState cactusState = IllegalRegistry.IMPOSSIBLE_CACTUS.get().defaultBlockState();
 					if (cactusState.canSurvive(level, downPos)) {
-						level.setBlock(downPos, cactusState, 11);
+						level.setBlock(downPos, cactusState, Block.UPDATE_ALL_IMMEDIATE);
 						cactusState.getBlock().setPlacedBy(level, downPos, cactusState, player, new ItemStack(IllegalRegistry.IMPOSSIBLE_CACTUS.get()));
 						if (player instanceof ServerPlayer) {
 							CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, downPos, stack);

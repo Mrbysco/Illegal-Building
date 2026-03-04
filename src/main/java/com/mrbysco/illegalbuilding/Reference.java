@@ -1,6 +1,6 @@
 package com.mrbysco.illegalbuilding;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -11,8 +11,8 @@ public class Reference {
 	public static final String MOD_ID = "illegalbuilding";
 	public static final String MOD_PREFIX = MOD_ID + ":";
 
-	public static ResourceLocation modLoc(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static Identifier modLoc(String path) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 
 	public static final TagKey<Block> IMPOSSIBLE_SAND = BlockTags.create(modLoc("impossible_sand"));

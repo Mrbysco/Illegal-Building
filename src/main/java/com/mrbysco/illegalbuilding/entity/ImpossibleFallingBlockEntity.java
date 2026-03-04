@@ -17,7 +17,6 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,6 +25,7 @@ import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
@@ -109,7 +109,7 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 
 				if (!this.onRoof && !flag1) {
 					if (this.time > 100 && (pos.getY() <= this.level().getMinY() || pos.getY() > this.level().getMaxY()) || this.time > 600) {
-						if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+						if (this.dropItem && serverlevel.getGameRules().get(GameRules.ENTITY_DROPS)) {
 							this.spawnAtLocation(serverlevel, block);
 						}
 
@@ -160,14 +160,14 @@ public class ImpossibleFallingBlockEntity extends FallingBlockEntity {
 											blockentity.setChanged();
 										}
 									}
-								} else if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+								} else if (this.dropItem && serverlevel.getGameRules().get(GameRules.ENTITY_DROPS)) {
 									this.discard();
 									this.callOnBrokenAfterFall(block, pos);
 									this.spawnAtLocation(serverlevel, block);
 								}
 							} else {
 								this.discard();
-								if (this.dropItem && serverlevel.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+								if (this.dropItem && serverlevel.getGameRules().get(GameRules.ENTITY_DROPS)) {
 									this.callOnBrokenAfterFall(block, pos);
 									this.spawnAtLocation(serverlevel, block);
 								}
