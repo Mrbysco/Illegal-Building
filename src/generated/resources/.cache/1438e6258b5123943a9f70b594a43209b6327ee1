@@ -1,4 +1,4 @@
-// 1.21.11	2026-03-04T16:53:06.4602915	Model Definitions - illegalbuilding
+// 26.1.2	2026-05-17T14:39:46.7310776	Model Definitions - illegalbuilding
 a1bbbeae38712f8ab93f78c8667b6ff8475f574d assets/illegalbuilding/blockstates/impossible_acacia_log.json
 e44ebbc8623b7fd58a6d5f11e3a970507ca03d4c assets/illegalbuilding/blockstates/impossible_birch_log.json
 a8e047b6e50bcd527d017c3229c867d9311b1e23 assets/illegalbuilding/blockstates/impossible_cactus.json
@@ -29,6 +29,6 @@ d4cc21b463110dbcff2467d8be396d5cc4e9aac2 assets/illegalbuilding/models/block/imp
 bff214b1cb0188805595132dd1aa704ef3d8fb36 assets/illegalbuilding/models/block/impossible_red_sand.json
 92c4f9d915a02eede0511dfa59ed4b3aca3fa58f assets/illegalbuilding/models/block/impossible_sand.json
 09ffe6d39ed836f32579ae8a971cac4725d1561d assets/illegalbuilding/models/block/impossible_spruce_log.json
-d1e21b2737bf9713b7d7f48705d5195c1f752e28 assets/illegalbuilding/models/block/impossible_sugar_cane.json
+7badbdfc2d92f6d6a4f5a5fded26f74e28483c2c assets/illegalbuilding/models/block/impossible_sugar_cane.json
 8b6c0d61ae6ab8c227899651bbd3f5d0a999dc8b assets/illegalbuilding/models/block/offset_stone.json
 6d703548f4e978aca60167df3df41d68f6c08dd9 assets/illegalbuilding/models/item/impossible_sugar_cane.json

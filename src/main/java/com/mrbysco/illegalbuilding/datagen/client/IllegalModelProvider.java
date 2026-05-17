@@ -11,6 +11,7 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
@@ -19,7 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 
 public class IllegalModelProvider extends ModelProvider {
 	public static final ModelTemplate OFFSET_CUBE_ALL = ModelTemplates.create("illegalbuilding:cube_offset_all", TextureSlot.ALL);
-	public static final ModelTemplate UPSIDEDOWN_CROSS = ModelTemplates.create("illegalbuilding:upsidedown_cross", TextureSlot.CROSS).extend().renderType("cutout").build();
+	public static final ModelTemplate UPSIDEDOWN_CROSS = ModelTemplates.create("illegalbuilding:upsidedown_cross", TextureSlot.CROSS);
 
 	public IllegalModelProvider(PackOutput output) {
 		super(output, Reference.MOD_ID);
@@ -55,7 +56,7 @@ public class IllegalModelProvider extends ModelProvider {
 	}
 
 	private void createLog(BlockModelGenerators blockModels, Block block, Identifier texture) {
-		TextureMapping texturemapping = TextureMapping.cube(texture);
+		TextureMapping texturemapping = TextureMapping.cube(new Material(texture));
 		Identifier model = ModelTemplates.CUBE_ALL.create(block, texturemapping, blockModels.modelOutput);
 		MultiVariantGenerator multiVariant = MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model));
 

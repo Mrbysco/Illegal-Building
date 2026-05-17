@@ -2,19 +2,25 @@ package com.mrbysco.illegalbuilding.client;
 
 import com.mrbysco.illegalbuilding.client.renderer.ImpossibleFallingBlockRenderer;
 import com.mrbysco.illegalbuilding.registry.IllegalRegistry;
-import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.color.block.BlockTintSources;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
+import java.util.List;
+
+@EventBusSubscriber(Dist.CLIENT)
 public class ClientHandler {
 
+	@SubscribeEvent
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(IllegalRegistry.IMPOSSIBLE_FALLING_BLOCK.get(), ImpossibleFallingBlockRenderer::new);
 	}
 
-
-	public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-		event.register((state, blockDisplayReader, pos, tintIndex) -> blockDisplayReader != null && pos != null ?
-				BiomeColors.getAverageGrassColor(blockDisplayReader, pos) : -1, IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get());
+	@SubscribeEvent
+	public static void registerBlockColors(RegisterColorHandlersEvent.BlockTintSources event) {
+		event.register(List.of(BlockTintSources.sugarCane()), IllegalRegistry.IMPOSSIBLE_SUGAR_CANE.get());
 	}
 }

@@ -1,4 +1,4 @@
-// 1.21.11	2026-03-04T16:53:06.4622919	Illegal Building Recipes
+// 26.1.2	2026-05-17T14:39:46.7335981	Illegal Building Recipes
 d33de3e92dc4aa19736937941b7fe69b85b06333 data/illegalbuilding/advancement/recipes/building_blocks/impossible_acacia_log.json
 4657d1ef1e28049ad9c985139ffdac20e4578afd data/illegalbuilding/advancement/recipes/building_blocks/impossible_birch_log.json
 0686e027929876669f147ef2a373890d1071167d data/illegalbuilding/advancement/recipes/building_blocks/impossible_dark_oak_log.json
@@ -13,7 +13,7 @@ be8a7e5fb1df013d8aaa0fecba8ec14a87a34260 data/illegalbuilding/recipe/impossible_
 60cd89493add47d5b30df3b8ff123e007f34452a data/illegalbuilding/recipe/impossible_dark_oak_log.json
 f2287455bf27bbc74ff4b5a2973ccc2bd39067d1 data/illegalbuilding/recipe/impossible_jungle_log.json
 8309e941f2cfb33cdef1a954ed550db7572a5145 data/illegalbuilding/recipe/impossible_oak_log.json
-43ba9a2f16098733f9a312494f0ec3e34e14dff2 data/illegalbuilding/recipe/impossible_red_sand.json
-4d512073ab65c196e16e794c4d27802144ad5327 data/illegalbuilding/recipe/impossible_sand.json
+4a42a6722540323e7a08fc05f6be64963a77325f data/illegalbuilding/recipe/impossible_red_sand.json
+569a7e6647d9ac9a6a6f6ac2577e911249e89a18 data/illegalbuilding/recipe/impossible_sand.json
 0c47506b7d9ad7ce3b6c15b83d28fd598155277f data/illegalbuilding/recipe/impossible_spruce_log.json
 4e92c95e909d31ead76965e70b60d71b428e5660 data/illegalbuilding/recipe/offset_stone.json

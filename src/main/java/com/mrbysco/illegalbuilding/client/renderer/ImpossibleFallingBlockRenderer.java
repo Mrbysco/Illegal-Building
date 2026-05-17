@@ -2,11 +2,12 @@ package com.mrbysco.illegalbuilding.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrbysco.illegalbuilding.entity.ImpossibleFallingBlockEntity;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.FallingBlockRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +43,10 @@ public class ImpossibleFallingBlockRenderer extends EntityRenderer<ImpossibleFal
 		renderState.movingBlockRenderState.randomSeedPos = fallingBlockEntity.getStartPos();
 		renderState.movingBlockRenderState.blockPos = blockpos;
 		renderState.movingBlockRenderState.blockState = fallingBlockEntity.getBlockState();
-		renderState.movingBlockRenderState.biome = fallingBlockEntity.level().getBiome(blockpos);
-		renderState.movingBlockRenderState.level = fallingBlockEntity.level();
+		if (fallingBlockEntity.level() instanceof ClientLevel clientLevel) {
+			renderState.movingBlockRenderState.biome = clientLevel.getBiome(blockpos);
+			renderState.movingBlockRenderState.cardinalLighting = clientLevel.cardinalLighting();
+			renderState.movingBlockRenderState.lightEngine = clientLevel.getLightEngine();
+		}
 	}
 }
