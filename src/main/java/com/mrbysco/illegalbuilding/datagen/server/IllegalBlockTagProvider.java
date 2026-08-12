@@ -17,28 +17,28 @@ public class IllegalBlockTagProvider extends BlockTagsProvider {
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
 		this.tag(Reference.IMPOSSIBLE_SAND).add(
-				IllegalRegistry.IMPOSSIBLE_SAND.get(), IllegalRegistry.IMPOSSIBLE_RED_SAND.get()
+				IllegalRegistry.IMPOSSIBLE_SAND.getKey(), IllegalRegistry.IMPOSSIBLE_RED_SAND.getKey()
 		);
 
 		this.tag(BlockTags.MINEABLE_WITH_AXE).add(
-				IllegalRegistry.IMPOSSIBLE_OAK_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_SPRUCE_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_BIRCH_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_ACACIA_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_CHERRY_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_PALE_OAK_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_MANGROVE_LOG.get()
+				IllegalRegistry.IMPOSSIBLE_OAK_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_SPRUCE_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_BIRCH_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_ACACIA_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_CHERRY_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_PALE_OAK_LOG.getKey(),
+				IllegalRegistry.IMPOSSIBLE_MANGROVE_LOG.getKey()
 		);
 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-				IllegalRegistry.OFFSET_STONE.get()
+				IllegalRegistry.OFFSET_STONE.getKey()
 		);
 
 		this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
-				IllegalRegistry.IMPOSSIBLE_SAND.get(),
-				IllegalRegistry.IMPOSSIBLE_RED_SAND.get()
+				IllegalRegistry.IMPOSSIBLE_SAND.getKey(),
+				IllegalRegistry.IMPOSSIBLE_RED_SAND.getKey()
 		);
 	}
 }

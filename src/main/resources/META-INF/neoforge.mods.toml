@@ -15,12 +15,12 @@ Just some blasphemy.
 [[dependencies.illegalbuilding]]
 modId="minecraft"
 type="required"
-versionRange="[26.1.1,)"
+versionRange="[26.2,)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.illegalbuilding]]
 modId="neoforge"
 type="required"
-versionRange="[26.1.1.0-alpha,)"
+versionRange="[26.2.0.1-beta,)"
 ordering="NONE"
 side="BOTH"

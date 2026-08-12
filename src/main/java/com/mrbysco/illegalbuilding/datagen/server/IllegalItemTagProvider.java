@@ -17,7 +17,7 @@ public class IllegalItemTagProvider extends ItemTagsProvider {
 	@Override
 	public void addTags(HolderLookup.Provider provider) {
 		this.tag(Reference.IMPOSSIBLE_SAND_ITEM).add(
-				IllegalRegistry.IMPOSSIBLE_SAND.asItem(), IllegalRegistry.IMPOSSIBLE_RED_SAND.asItem()
+				IllegalRegistry.IMPOSSIBLE_SAND_ITEM.getKey(), IllegalRegistry.IMPOSSIBLE_RED_SAND_ITEM.getKey()
 		);
 	}
 }

@@ -25,7 +25,7 @@ public class ImpossibleFallingBlockRenderer extends EntityRenderer<ImpossibleFal
 		if (blockstate.getRenderShape() == RenderShape.MODEL) {
 			poseStack.pushPose();
 			poseStack.translate(-0.5, 0.0, -0.5);
-			nodeCollector.submitMovingBlock(poseStack, renderState.movingBlockRenderState);
+			nodeCollector.submitMovingBlock(poseStack, renderState.movingBlockRenderState, renderState.outlineColor);
 			poseStack.popPose();
 			super.submit(renderState, poseStack, nodeCollector, cameraRenderState);
 		}
