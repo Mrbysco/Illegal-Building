@@ -1,1 +1,1 @@
-* Add missing log variations
+* Update to 26.2
