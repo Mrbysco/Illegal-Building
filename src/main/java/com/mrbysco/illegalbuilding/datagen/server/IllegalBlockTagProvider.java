@@ -26,7 +26,10 @@ public class IllegalBlockTagProvider extends BlockTagsProvider {
 				IllegalRegistry.IMPOSSIBLE_BIRCH_LOG.get(),
 				IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG.get(),
 				IllegalRegistry.IMPOSSIBLE_ACACIA_LOG.get(),
-				IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.get()
+				IllegalRegistry.IMPOSSIBLE_CHERRY_LOG.get(),
+				IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.get(),
+				IllegalRegistry.IMPOSSIBLE_PALE_OAK_LOG.get(),
+				IllegalRegistry.IMPOSSIBLE_MANGROVE_LOG.get()
 		);
 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(

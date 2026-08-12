@@ -35,7 +35,10 @@ public class IllegalModelProvider extends ModelProvider {
 		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_BIRCH_LOG.get(), mcLocation("block/birch_log_top"));
 		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG.get(), mcLocation("block/jungle_log_top"));
 		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_ACACIA_LOG.get(), mcLocation("block/acacia_log_top"));
+		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_CHERRY_LOG.get(), mcLocation("block/cherry_log_top"));
 		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.get(), mcLocation("block/dark_oak_log_top"));
+		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_PALE_OAK_LOG.get(), mcLocation("block/pale_oak_log_top"));
+		createLog(blockModels, IllegalRegistry.IMPOSSIBLE_MANGROVE_LOG.get(), mcLocation("block/mangrove_log_top"));
 
 		createAll(blockModels, IllegalRegistry.IMPOSSIBLE_SAND.get(), Blocks.SAND);
 		createAll(blockModels, IllegalRegistry.IMPOSSIBLE_RED_SAND.get(), Blocks.RED_SAND);

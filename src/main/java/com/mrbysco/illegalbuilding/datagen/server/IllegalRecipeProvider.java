@@ -24,7 +24,10 @@ public class IllegalRecipeProvider extends RecipeProvider {
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_BIRCH_LOG_ITEM, Items.BIRCH_LOG);
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG_ITEM, Items.JUNGLE_LOG);
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_ACACIA_LOG_ITEM, Items.ACACIA_LOG);
+		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_CHERRY_LOG_ITEM, Items.CHERRY_LOG);
 		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG_ITEM, Items.DARK_OAK_LOG);
+		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_PALE_OAK_LOG_ITEM, Items.PALE_OAK_LOG);
+		createLogRecipe(output, IllegalRegistry.IMPOSSIBLE_MANGROVE_LOG_ITEM, Items.MANGROVE_LOG);
 
 		shapeless(RecipeCategory.MISC, IllegalRegistry.IMPOSSIBLE_SAND_ITEM.get())
 				.requires(Items.SAND)

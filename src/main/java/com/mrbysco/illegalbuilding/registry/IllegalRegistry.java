@@ -48,7 +48,10 @@ public class IllegalRegistry {
 	public static final DeferredBlock<Block> IMPOSSIBLE_BIRCH_LOG = BLOCKS.registerSimpleBlock("impossible_birch_log", () -> Block.Properties.ofFullCopy(Blocks.BIRCH_PLANKS).strength(2.0F, 3.0F));
 	public static final DeferredBlock<Block> IMPOSSIBLE_JUNGLE_LOG = BLOCKS.registerSimpleBlock("impossible_jungle_log", () -> Block.Properties.ofFullCopy(Blocks.JUNGLE_PLANKS).strength(2.0F, 3.0F));
 	public static final DeferredBlock<Block> IMPOSSIBLE_ACACIA_LOG = BLOCKS.registerSimpleBlock("impossible_acacia_log", () -> Block.Properties.ofFullCopy(Blocks.ACACIA_PLANKS).strength(2.0F, 3.0F));
+	public static final DeferredBlock<Block> IMPOSSIBLE_CHERRY_LOG = BLOCKS.registerSimpleBlock("impossible_cherry_log", () -> Block.Properties.ofFullCopy(Blocks.CHERRY_PLANKS).strength(2.0F, 3.0F));
 	public static final DeferredBlock<Block> IMPOSSIBLE_DARK_OAK_LOG = BLOCKS.registerSimpleBlock("impossible_dark_oak_log", () -> Block.Properties.ofFullCopy(Blocks.DARK_OAK_PLANKS).strength(2.0F, 3.0F));
+	public static final DeferredBlock<Block> IMPOSSIBLE_PALE_OAK_LOG = BLOCKS.registerSimpleBlock("impossible_pale_oak_log", () -> Block.Properties.ofFullCopy(Blocks.PALE_OAK_PLANKS).strength(2.0F, 3.0F));
+	public static final DeferredBlock<Block> IMPOSSIBLE_MANGROVE_LOG = BLOCKS.registerSimpleBlock("impossible_mangrove_log", () -> Block.Properties.ofFullCopy(Blocks.MANGROVE_PLANKS).strength(2.0F, 3.0F));
 
 	public static final DeferredBlock<ImpossibleSandBlock> IMPOSSIBLE_SAND = BLOCKS.registerBlock("impossible_sand", (properties) -> new ImpossibleSandBlock(new ColorRGBA(14406560), properties), () -> Block.Properties.ofFullCopy(Blocks.SAND).strength(0.5F).sound(SoundType.SAND));
 	public static final DeferredBlock<ImpossibleSandBlock> IMPOSSIBLE_RED_SAND = BLOCKS.registerBlock("impossible_red_sand", (properties) -> new ImpossibleSandBlock(new ColorRGBA(11098145), properties), () -> Block.Properties.ofFullCopy(Blocks.RED_SAND).strength(0.5F).sound(SoundType.SAND));
@@ -57,12 +60,17 @@ public class IllegalRegistry {
 	public static final DeferredBlock<ImpossibleCactusBlock> IMPOSSIBLE_CACTUS = BLOCKS.registerBlock("impossible_cactus", ImpossibleCactusBlock::new, () -> Block.Properties.ofFullCopy(Blocks.CACTUS).randomTicks().strength(0.4F).sound(SoundType.WOOL));
 
 	public static final DeferredItem<BlockItem> OFFSET_STONE_ITEM = ITEMS.registerSimpleBlockItem(OFFSET_STONE);
+
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_OAK_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_OAK_LOG);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_SPRUCE_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_SPRUCE_LOG);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_BIRCH_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_BIRCH_LOG);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_JUNGLE_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_JUNGLE_LOG);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_ACACIA_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_ACACIA_LOG);
+	public static final DeferredItem<BlockItem> IMPOSSIBLE_CHERRY_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_CHERRY_LOG);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_DARK_OAK_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_DARK_OAK_LOG);
+	public static final DeferredItem<BlockItem> IMPOSSIBLE_PALE_OAK_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_PALE_OAK_LOG);
+	public static final DeferredItem<BlockItem> IMPOSSIBLE_MANGROVE_LOG_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_MANGROVE_LOG);
+
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_SAND_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_SAND);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_RED_SAND_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_RED_SAND);
 	public static final DeferredItem<BlockItem> IMPOSSIBLE_SUGAR_CANE_ITEM = ITEMS.registerSimpleBlockItem(IMPOSSIBLE_SUGAR_CANE);

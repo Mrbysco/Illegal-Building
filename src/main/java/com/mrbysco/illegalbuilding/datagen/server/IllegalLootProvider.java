@@ -35,7 +35,10 @@ public class IllegalLootProvider extends LootTableProvider {
 			this.dropSelf(IllegalRegistry.IMPOSSIBLE_BIRCH_LOG.get());
 			this.dropSelf(IllegalRegistry.IMPOSSIBLE_JUNGLE_LOG.get());
 			this.dropSelf(IllegalRegistry.IMPOSSIBLE_ACACIA_LOG.get());
+			this.dropSelf(IllegalRegistry.IMPOSSIBLE_CHERRY_LOG.get());
 			this.dropSelf(IllegalRegistry.IMPOSSIBLE_DARK_OAK_LOG.get());
+			this.dropSelf(IllegalRegistry.IMPOSSIBLE_PALE_OAK_LOG.get());
+			this.dropSelf(IllegalRegistry.IMPOSSIBLE_MANGROVE_LOG.get());
 
 			this.dropSelf(IllegalRegistry.IMPOSSIBLE_SAND.get());
 			this.dropSelf(IllegalRegistry.IMPOSSIBLE_RED_SAND.get());
