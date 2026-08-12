@@ -1,5 +1,6 @@
 package com.mrbysco.illegalbuilding.datagen;
 
+import com.mrbysco.illegalbuilding.datagen.client.IllegalLanguageProvider;
 import com.mrbysco.illegalbuilding.datagen.client.IllegalModelProvider;
 import com.mrbysco.illegalbuilding.datagen.server.IllegalBlockTagProvider;
 import com.mrbysco.illegalbuilding.datagen.server.IllegalItemTagProvider;
@@ -28,6 +29,7 @@ public class IllegalDataGen {
 		generator.addProvider(true, new IllegalBlockTagProvider(packOutput, lookupProvider));
 		generator.addProvider(true, new IllegalItemTagProvider(packOutput, lookupProvider));
 
+		generator.addProvider(true, new IllegalLanguageProvider(packOutput));
 		generator.addProvider(true, new IllegalModelProvider(packOutput));
 	}
 }
