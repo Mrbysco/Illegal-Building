@@ -1,0 +1,17 @@
+{
+  "block.illegalbuilding.impossible_acacia_log": "Illegal Acacia Log",
+  "block.illegalbuilding.impossible_birch_log": "Illegal Birch Log",
+  "block.illegalbuilding.impossible_cactus": "Illegal Cactus",
+  "block.illegalbuilding.impossible_cherry_log": "Illegal Cherry Log",
+  "block.illegalbuilding.impossible_dark_oak_log": "Illegal Dark Oak Log",
+  "block.illegalbuilding.impossible_jungle_log": "Illegal Jungle Log",
+  "block.illegalbuilding.impossible_mangrove_log": "Illegal Mangrove Log",
+  "block.illegalbuilding.impossible_oak_log": "Illegal Oak Log",
+  "block.illegalbuilding.impossible_pale_oak_log": "Illegal Pale Oak Log",
+  "block.illegalbuilding.impossible_red_sand": "Illegal Red Sand",
+  "block.illegalbuilding.impossible_sand": "Illegal Sand",
+  "block.illegalbuilding.impossible_spruce_log": "Illegal Spruce Log",
+  "block.illegalbuilding.impossible_sugar_cane": "Illegal Sugar Cane",
+  "block.illegalbuilding.offset_stone": "Offset Stone",
+  "itemGroup.illegalbuilding": "Illegal Building"
+}

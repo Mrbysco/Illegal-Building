@@ -5,6 +5,9 @@
     "illegalbuilding:impossible_birch_log",
     "illegalbuilding:impossible_jungle_log",
     "illegalbuilding:impossible_acacia_log",
-    "illegalbuilding:impossible_dark_oak_log"
+    "illegalbuilding:impossible_cherry_log",
+    "illegalbuilding:impossible_dark_oak_log",
+    "illegalbuilding:impossible_pale_oak_log",
+    "illegalbuilding:impossible_mangrove_log"
   ]
 }
